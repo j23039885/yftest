@@ -281,7 +281,12 @@ app.post("/api/upload-completed-orders", (req, res) => {
 app.get("/", (req, res) => {
   res.send("API is running.");
 });
-
+app.get("/api/debug/version", (req, res) => {
+  res.json({
+    version: "2025-07-15",
+    hasUploadEndpoint: typeof addDoc !== "undefined",
+  });
+});
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
