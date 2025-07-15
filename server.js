@@ -9,7 +9,7 @@ const multer = require("multer");
 const admin = require("firebase-admin");
 
 // ✅ Load your service account key (make sure this path is correct)
-const serviceAccount = require("./path/to/your/serviceKey.json");
+const serviceAccount = require("./path/to/your/serviceaccountkey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
