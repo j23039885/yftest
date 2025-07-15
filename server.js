@@ -5,11 +5,11 @@ const path = require("path");
 const fs = require("fs");
 const multer = require("multer");
 
-// ✅ Firebase imports
+//  Firebase imports
 const { initializeApp } = require("firebase/app");
 const { getFirestore, collection, addDoc } = require("firebase/firestore");
 
-// ✅ Firebase config
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyBagIcddt7BjkYsvC33BqDQfMzsFdjy5D0",
   authDomain: "yuanfong-84448.firebaseapp.com",
@@ -20,7 +20,7 @@ const firebaseConfig = {
   measurementId: "G-HCBLT09FXN"
 };
 
-// ✅ Init Firebase + Firestore
+//  Init Firebase + Firestore
 const firebaseApp = initializeApp(firebaseConfig);
 const firestoreDb = getFirestore(firebaseApp);
 
@@ -47,10 +47,10 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(cors());
 app.use(express.json());
 
-// ✅ SQLite database
+//  SQLite database
 const db = new sqlite3.Database("./orders.db");
 
-// ✅ Init tables
+//  Init tables
 db.serialize(() => {
   db.run(`
     CREATE TABLE IF NOT EXISTS orders (
@@ -89,7 +89,7 @@ db.serialize(() => {
   `);
 });
 
-// ====================== ORDERS API ======================
+
 
 // GET all orders
 app.get("/api/orders", (req, res) => {
@@ -176,7 +176,7 @@ app.post("/api/orders", upload.single("paymentProof"), (req, res) => {
   }
 });
 
-// ✅ UPDATE order status
+// UPDATE order status
 app.put("/api/orders/:id/status", (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
@@ -220,7 +220,7 @@ app.put("/api/orders/:id/verify", (req, res) => {
   });
 });
 
-// DELETE completed orders (optional cleanup)
+// DELETE completed orders
 app.delete("/api/orders/completed", (req, res) => {
   const sql = `DELETE FROM orders WHERE status = 'completed'`;
 
@@ -234,7 +234,7 @@ app.delete("/api/orders/completed", (req, res) => {
   });
 });
 
-// ✅ NEW: Upload completed orders → Firestore directly from `orders`
+// Upload completed orders → Firestore directly from `orders`
 app.post("/api/upload-completed-orders", (req, res) => {
   const sql = "SELECT * FROM orders WHERE status = 'completed'";
 
@@ -274,30 +274,12 @@ app.post("/api/upload-completed-orders", (req, res) => {
   });
 });
 
-// ====================== MENU, PROMOTIONS, ETC. ======================
-// (Keep your existing menu & promotions routes unchanged)
 
 // Root route
-app.get("/api/debug/db", (req, res) => {
-  db.all("SELECT * FROM orders WHERE status='completed'", (err, ordersCompleted) => {
-    db.all("SELECT * FROM completed_orders", (err2, completedOrdersTable) => {
-      res.json({
-        ordersCompleted,
-        completedOrdersTable
-      });
-    });
-  });
-});
-
 app.get("/", (req, res) => {
   res.send("API is running.");
 });
-app.get("/api/debug/version", (req, res) => {
-  res.json({
-    version: "2025-07-15",
-    hasUploadEndpoint: typeof addDoc !== "undefined",
-  });
-});
+
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
