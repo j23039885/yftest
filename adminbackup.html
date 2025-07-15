@@ -1425,7 +1425,7 @@
   try {
     showNotification('Starting upload to Firestore...');
     
-    const response = await fetch(`${API_BASE_URL}/api/migrate-orders`, {
+    const response = await fetch(`${API_BASE_URL}/api/upload-completed-orders`, {
       method: 'POST'
     });
 
