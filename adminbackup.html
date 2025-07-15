@@ -693,88 +693,6 @@
       }
     }
   </style>
-
-  #testUploadSection {
-      margin: 20px 0;
-      padding: 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: #f9f9f9;
-    }
-    #testPreview {
-      margin-top: 10px;
-      max-width: 150px;
-      display: none;
-    }
-  </style>
-</head>
-<body>
-
-  <div id="adminDashboard">
-    <!-- Existing dashboard UI -->
-
-    <!-- ✅ Test Upload Section -->
-    <div id="testUploadSection">
-      <h3>Test File Upload</h3>
-      <input type="file" id="testFileInput">
-      <button id="testUploadBtn">Upload Test File</button>
-      <br>
-      <img id="testPreview" alt="Preview" />
-    </div>
-
-    <!-- Your existing sections for orders, menu, promotions etc. -->
-
-    <div id="ordersContainer"></div>
-    <div id="menuItemsList"></div>
-    <div id="promosList"></div>
-  </div>
-
-  <!-- ✅ Modal for payment proof -->
-  <div id="paymentProofModal" style="display:none;">
-    <span class="close-modal">&times;</span>
-    <img id="modalProofImage" />
-  </div>
-
-  <script>
-    const API_BASE_URL = 'YOUR_API_URL';
-
-    // ✅ Test Upload Logic
-    document.getElementById('testFileInput').addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      const preview = document.getElementById('testPreview');
-      if (file) {
-        preview.src = URL.createObjectURL(file);
-        preview.style.display = 'block';
-      } else {
-        preview.style.display = 'none';
-      }
-    });
-
-    document.getElementById('testUploadBtn').addEventListener('click', async () => {
-      const fileInput = document.getElementById('testFileInput');
-      const file = fileInput.files[0];
-      if (!file) {
-        alert('Please select a file first.');
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('file', file);
-
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/test-upload`, {
-          method: 'POST',
-          body: formData
-        });
-
-        if (!response.ok) throw new Error('Upload failed');
-
-        const result = await response.json();
-        alert('Upload successful! File URL: ' + result.url);
-      } catch (err) {
-        alert('Error uploading file: ' + err.message);
-      }
-    });
 </head>
 
 <body>
@@ -801,6 +719,7 @@
       <div>
         <button class="refresh-button" id="refreshButton">Refresh</button>
         <button class="clear-button" id="clearButton">Clear Completed</button>
+        <button class="clear-button" id="uploadToFirestoreButton" style="background-color: #2196F3;">Upload to Firestore</button>
         <button class="clear-button" id="logoutButton">Logout</button>
       </div>
     </header>
@@ -1500,6 +1419,33 @@
       document.getElementById('paymentProofModal').style.display = 'none';
     }
 
+    async function uploadCompletedToFirestore() {
+  if (!confirm('Are you sure you want to upload completed orders to Firestore?')) return;
+
+  try {
+    showNotification('Starting upload to Firestore...');
+    
+    const response = await fetch(`${API_BASE_URL}/api/migrate-orders`, {
+      method: 'POST'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to upload orders');
+    }
+
+    const result = await response.json();
+    showNotification(result.message || 'Orders uploaded to Firestore successfully!');
+    
+    if (result.errors && result.errors.length > 0) {
+      console.error('Upload errors:', result.errors);
+      showNotification(`${result.errors.length} orders failed to upload`, false);
+    }
+  } catch (err) {
+    showNotification(`Error: ${err.message}`, false);
+    console.error('Error uploading orders:', err);
+  }
+}
+
     // Event Listeners
     document.addEventListener('DOMContentLoaded', () => {
       // Login form
@@ -1512,7 +1458,7 @@
         showNotification('Orders refreshed');
       });
       document.getElementById('clearButton').addEventListener('click', clearCompletedOrders);
-
+      document.getElementById('uploadToFirestoreButton').addEventListener('click', uploadCompletedToFirestore);
       // Form submissions
       document.getElementById('addMenuItemForm').addEventListener('submit', addMenuItem);
       document.getElementById('addPromoForm').addEventListener('submit', addPromotion);
