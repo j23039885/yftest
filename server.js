@@ -278,6 +278,17 @@ app.post("/api/upload-completed-orders", (req, res) => {
 // (Keep your existing menu & promotions routes unchanged)
 
 // Root route
+app.get("/api/debug/db", (req, res) => {
+  db.all("SELECT * FROM orders WHERE status='completed'", (err, ordersCompleted) => {
+    db.all("SELECT * FROM completed_orders", (err2, completedOrdersTable) => {
+      res.json({
+        ordersCompleted,
+        completedOrdersTable
+      });
+    });
+  });
+});
+
 app.get("/", (req, res) => {
   res.send("API is running.");
 });
