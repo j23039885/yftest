@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuan Fong Restaurant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        /* Temporary inline styles for demonstration - should be moved to CSS file */
+        .restaurant-img,
+        .gallery-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .about-content,
+        .location-content,
+        .gallery-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .about-text,
+        .about-image,
+        .gallery-item {
+            flex: 1 1 300px;
+            max-width: 100%;
+        }
+
+        .map-container {
+            width: 100%;
+            overflow: hidden;
+            padding-bottom: 56.25%;
+            /* 16:9 aspect ratio */
+            position: relative;
+        }
+
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Remove fixed margins and use responsive units */
+        .about-text p {
+            text-align: justify;
+            margin: 0 1rem;
+            padding: 0 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="YuanFong.png" alt="Yuan Fong Restaurant Logo" class="logo" style="width: 125px; height: 100px;">
+        </div>
+        <nav id="navbar">
+            <div class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="blog.html">News & Promotions</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Yuan Fong Restaurant</h1>
+            <p>Authentic Malaysian Chinese Cuisine</p>
+            <a href="menu.html" class="btn">View Our Menu</a>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p style="text-align: justify; margin-left: 50px;">Yuan Fong Restaurant offers authentic Malaysian
+                        Chinese dishes prepared with the freshest ingredients and traditional recipes. From our famous
+                        fish ball noodles to our delicious kaya butter toast, we provide a taste of Malaysian heritage
+                        in every dish.</p><br>
+                    <p style="text-align: justify; margin-left: 50px;">Our restaurant combines a warm, welcoming
+                        atmosphere with excellent service to create an unforgettable dining experience for our guests.
+                    </p><br>
+                </div>
+                <div class="about-image">
+                    <img src="Extra/Outside.jpeg" alt="Yuan Fong Restaurant Exterior" class="restaurant-img"
+                        style="width: 50%; float: right; margin-right: 80px;">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="gallery">
+        <div class="container">
+            <h2>Our Restaurant</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="Drinks/D3.jpeg" alt="Restaurant Drink" class="gallery-img" style="width: 275px;">
+                    <p>Drinks</p>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="Extra/Inside.jpeg" alt="Restaurant Interior" class="gallery-img">
+                    <p>Dining Area</p>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="Rice/R3.jpeg" alt="Restaurant Dish" class="gallery-img"
+                        style="width: 300px; height: 285px;">
+                    <p>Food</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="location">
+        <div class="container">
+            <h2>Find Us</h2>
+            <div class="location-content">
+                <div class="map-container">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.9394782850973!2d101.59824379999999!3d3.1107156!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4d00003567e1%3A0x4192f53b4cfa5d8f!2sRestaurant%20Yuan%20Fong!5e0!3m2!1sen!2smy!4v1745588683253!5m2!1sen!2smy"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <div class="address-info">
+                    <h3>Address</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> No.24, Jalan SS4D/14, Ss 4, 47301 Petaling Jaya, Selangor
+                    </p>
+                    <h3>Opening Hours</h3>
+                    <p><i class="far fa-clock"></i> Monday: Closed</p>
+                    <p><i class="far fa-clock"></i> Tuesday - Sunday: 8:00 AM - 4:30 PM</p>
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-phone"></i> +60 12-515 0518</p>
+                    <p><i class="fas fa-envelope"></i> info@yuanfong.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="social">
+        <div class="container">
+            <h2>Follow Us</h2>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <!-- <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a> -->
+                <!-- <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a> -->
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="YuanFong.png" alt="Yuan Fong Restaurant Logo" class="footer-logo-img"
+                        style="width: 250px; height: 200px; margin-left: -40px;">
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="blog.html">News & Promotions</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> No.24, Jalan SS4D/14, Ss 4,
+                        <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 47301 Petaling Jaya, Selangor
+                    </p>
+                    <p><i class="fas fa-phone"></i> +60 12-515 0518</p>
+                    <p><i class="fas fa-envelope"></i> info@yuanfong.com</p>
+                    <p>
+                        <i class="fas fa-handshake"></i>
+                        Partnership with
+                        <a href="https://rookietechstudios.vercel.app" target="_blank"
+                            style="text-decoration: none; color: inherit; color: #b98d4b">
+                            <strong>Rookie Tech Studios</strong>
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Yuan Fong Restaurant. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <style>
+    :root {
+      --primary-color: #b98d4b;
+      --secondary-color: #8b0000;
+      --light-color: #f8f4e9;
+      --dark-color: #333;
+      --gray-color: #666;
+      --light-gray: #eee;
+      --body-color: #fff;
+      --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: var(--body-color);
+      border-radius: 10px;
+      box-shadow: var(--box-shadow);
+      padding: 30px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    h1 {
+      color: var(--secondary-color);
+      font-size: 2.5rem;
+    }
+
+    .orders-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .order-card {
+      background-color: var(--body-color);
+      border-radius: 8px;
+      box-shadow: var(--box-shadow);
+      padding: 20px;
+      border-left: 5px solid var(--primary-color);
+    }
+
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .customer-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--secondary-color);
+    }
+
+    .order-number {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .order-info {
+      margin-bottom: 15px;
+    }
+
+    .items-list {
+      background-color: var(--light-color);
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .status-pending {
+      background-color: #FFC107;
+      color: #333;
+    }
+
+    .status-preparing {
+      background-color: #2196F3;
+      color: white;
+    }
+
+    .status-ready {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .status-completed {
+      background-color: #9E9E9E;
+      color: white;
+    }
+
+    .timestamp {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: var(--gray-color);
+    }
+
+    .order-total {
+      margin-top: 10px;
+      padding-top: 5px;
+      border-top: 1px dashed var(--light-gray);
+      font-weight: bold;
+    }
+
+    .order-actions select {
+      padding: 5px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--light-gray);
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      font-size: 1.2rem;
+      color: var(--gray-color);
+    }
+
+    .no-orders {
+      text-align: center;
+      padding: 40px;
+      font-size: 1.2rem;
+      color: var(--gray-color);
+      grid-column: 1 / -1;
+    }
+
+    .error-message {
+      text-align: center;
+      padding: 40px;
+      font-size: 1.2rem;
+      color: #d32f2f;
+      grid-column: 1 / -1;
+    }
+
+    .refresh-button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .clear-button {
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-left: 10px;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      max-width: 400px;
+      animation: slideIn 0.3s ease-out, fadeOut 0.5s ease-in 9.5s forwards;
+    }
+
+    .notification.success {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .notification.error {
+      background-color: #d32f2f;
+      color: white;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Admin Dashboard</h1>
+      <div>
+        <button class="refresh-button" id="refreshButton">Refresh</button>
+        <button class="clear-button" id="clearButton">Clear Completed</button>
+      </div>
+    </header>
+
+    <div id="orders" class="orders-container">
+      <div class="loading">Loading orders...</div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE_URL = 'http://localhost:5000';
+
+    // Show notification
+    function showNotification(message, isSuccess = true) {
+      const notification = document.createElement('div');
+      notification.className = `notification ${isSuccess ? 'success' : 'error'}`;
+      notification.textContent = message;
+      document.body.appendChild(notification);
+
+      // Remove after 10 seconds (matches CSS animation)
+      setTimeout(() => {
+        notification.remove();
+      }, 10000);
+    }
+
+    // Get status class
+    function getStatusClass(status) {
+      if (!status) return 'status-pending';
+
+      switch (status.toLowerCase()) {
+        case 'pending': return 'status-pending';
+        case 'preparing': return 'status-preparing';
+        case 'ready': return 'status-ready';
+        case 'completed': return 'status-completed';
+        default: return 'status-pending';
+      }
+    }
+    // Format items for display
+    // Format items for display
+    function formatItems(items) {
+      if (!Array.isArray(items)) return 'No items';
+
+      return items.map(item => {
+        return `${item.name} (x${item.quantity}) - RM${(item.price * item.quantity).toFixed(2)}`;
+      }).join('<br>') || 'No items in order';
+    }
+    // Calculate order total
+    function calculateTotal(items) {
+      if (!Array.isArray(items)) return 0;
+
+      return items.reduce((sum, item) => {
+        return sum + (item.price * (item.quantity || 1));
+      }, 0);
+    }
+
+    // Format timestamp
+    function formatTimestamp(timestamp) {
+      return new Date(timestamp).toLocaleString();
+    }
+
+    // Fetch orders from server
+    async function fetchOrders() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/orders`);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch orders');
+        }
+
+        const orders = await response.json();
+        renderOrders(orders);
+      } catch (err) {
+        document.getElementById('orders').innerHTML = `
+          <div class="error-message">
+            Error: ${err.message}<br>
+            <button class="refresh-button" onclick="fetchOrders()">Try Again</button>
+          </div>
+        `;
+        console.error('Error fetching orders:', err);
+      }
+    }
+
+    // In admin.html, update the renderOrders function
+    function renderOrders(orders) {
+      const container = document.getElementById('orders');
+
+      if (!Array.isArray(orders)) {
+        container.innerHTML = '<div class="error-message">Invalid orders data</div>';
+        return;
+      }
+
+      if (orders.length === 0) {
+        container.innerHTML = '<div class="no-orders">No orders found</div>';
+        return;
+      }
+
+      container.innerHTML = '';
+
+      orders.forEach(order => {
+        const orderCard = document.createElement('div');
+        orderCard.className = 'order-card';
+        orderCard.dataset.orderId = order.id;
+
+        // Safely parse items if they're a string
+        const items = typeof order.items === 'string' ? JSON.parse(order.items) : order.items;
+
+        // Ensure status exists and has a default value
+        const status = order.status || 'pending';
+
+        orderCard.innerHTML = `
+      <div class="order-header">
+        <div class="customer-name">${order.customerName || 'No name provided'}</div>
+        <div class="order-number">#${order.id}</div>
+      </div>
+      
+      <div class="order-info">
+        <div class="items-list">
+          ${formatItems(items)}
+          <div class="order-total">Total: RM${calculateTotal(items).toFixed(2)}</div>
+        </div>
+        
+        <div>
+          <span class="status ${getStatusClass(status)}">${status.toUpperCase()}</span>
+        </div>
+        
+        <div class="timestamp">${formatTimestamp(order.timestamp)}</div>
+        <div class="order-meta">Phone: ${order.phoneNumber || 'Not provided'} | People: ${order.numberOfPeople || 1}</div>
+
+        <div class="order-actions">
+          <select onchange="updateOrderStatus(${order.id}, this.value)" data-current-status="${status}">
+            <option value="pending" ${status === 'pending' ? 'selected' : ''}>Pending</option>
+            <option value="preparing" ${status === 'preparing' ? 'selected' : ''}>Preparing</option>
+            <option value="ready" ${status === 'ready' ? 'selected' : ''}>Ready</option>
+            <option value="completed" ${status === 'completed' ? 'selected' : ''}>Completed</option>
+          </select>
+        </div>
+      </div>
+    `;
+
+        container.appendChild(orderCard);
+      });
+    }
+
+    // Update order status
+    async function updateOrderStatus(orderId, newStatus) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}/status`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ status: newStatus })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update status');
+        }
+
+        showNotification(`Order #${orderId} status updated to ${newStatus}`);
+        fetchOrders();
+      } catch (err) {
+        showNotification(`Error: ${err.message}`, false);
+        console.error('Error updating status:', err);
+      }
+    }
+
+    // Clear completed orders
+    async function clearCompletedOrders() {
+      if (!confirm('Are you sure you want to clear all completed orders?')) return;
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/orders/completed`, {
+          method: 'DELETE'
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to clear completed orders');
+        }
+
+        const result = await response.json();
+        showNotification(result.message);
+        fetchOrders();
+      } catch (err) {
+        showNotification(`Error: ${err.message}`, false);
+        console.error('Error clearing orders:', err);
+      }
+    }
+
+    // Initialize the dashboard
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchOrders();
+
+      document.getElementById('refreshButton').addEventListener('click', () => {
+        fetchOrders();
+        showNotification('Orders refreshed');
+      });
+
+      document.getElementById('clearButton').addEventListener('click', clearCompletedOrders);
+
+      // Auto-refresh every 30 seconds
+      setInterval(fetchOrders, 30000);
+    });
+  </script>
+</body>
+
+</html>

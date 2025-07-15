@@ -1,0 +1,2305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Yuan Fong Restaurant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #b98d4b;
+            --secondary-color: #8b0000;
+            --light-color: #f8f4e9;
+            --dark-color: #333;
+            --gray-color: #666;
+            --light-gray: #eee;
+            --body-color: #fff;
+            --transition: all 0.3s ease;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            padding: 40px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .menu-section {
+            margin-bottom: 50px;
+        }
+
+        .menu-section h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .menu-item {
+            background: var(--body-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .item-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .item-info {
+            padding: 15px;
+        }
+
+        .item-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            color: var(--dark-color);
+        }
+
+        .item-price {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .cart-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .quantity-controls button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .quantity-controls button:hover {
+            background: var(--secondary-color);
+        }
+
+        .quantity {
+            min-width: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .add-to-cart {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .add-to-cart:hover {
+            background: var(--secondary-color);
+        }
+
+        .page-banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('banner-bg.jpg') center/cover;
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .page-banner h1 {
+            font-size: 3rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .noodle-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .noodle-option {
+            background: var(--light-gray);
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
+        }
+
+        .noodle-option:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .noodle-option.selected {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .soup-notice {
+            background: rgba(185, 141, 75, 0.1);
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--primary-color);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .drink-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .drink-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--light-gray);
+        }
+
+        .drink-type {
+            font-weight: 600;
+            min-width: 50px;
+        }
+
+        .drink-price {
+            color: var(--primary-color);
+            font-weight: bold;
+            min-width: 80px;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        /* Cart icon styles */
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        /* Success message styles */
+        .success-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            box-shadow: var(--box-shadow);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .success-message.show {
+            opacity: 1;
+        }
+
+        /* Cart modal styles */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cart-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .cart-title {
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--light-gray);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--light-gray);
+        }
+
+        .cart-item-name {
+            flex: 2;
+        }
+
+        .cart-item-quantity {
+            flex: 1;
+            text-align: center;
+        }
+
+        .cart-item-price {
+            flex: 1;
+            text-align: right;
+        }
+
+        .cart-total {
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 2px solid var(--primary-color);
+        }
+
+        .cart-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .cart-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-cart {
+            background: var(--light-gray);
+        }
+
+        /* Checkout Modal Styles */
+        .checkout-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .checkout-content {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .checkout-title {
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--light-gray);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .payment-qr {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: var(--light-color);
+            border-radius: 5px;
+            justify-content: center;
+        }
+
+        .payment-qr h4 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .checkout-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .checkout-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .back-to-cart {
+            background: var(--light-gray);
+        }
+
+        .confirm-order {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .checkout-btn:hover {
+            opacity: 0.9;
+        }
+
+        .cart-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="YuanFong.png" alt="Yuan Fong Restaurant Logo" class="logo" style="width: 125px; height: 100px;">
+        </div>
+        <nav id="navbar">
+            <div class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html" class="active">Menu</a></li>
+                <li><a href="blog.html">News & Promotions</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-banner">
+        <div class="container">
+            <h1>Our Menu</h1>
+        </div>
+    </section>
+
+    <section class="menu">
+        <div class="container">
+            <!-- Success message element -->
+            <div class="success-message" id="successMessage">Successfully added to cart!</div>
+
+            <!-- Cart Modal -->
+            <div class="cart-modal" id="cartModal">
+                <div class="cart-content">
+                    <h3 class="cart-title">Your Cart</h3>
+                    <div class="cart-items" id="cartItems">
+                        <!-- Cart items will be inserted here -->
+                    </div>
+                    <div class="cart-total" id="cartTotal">
+                        Total: RM0.00
+                    </div>
+                    <div class="cart-actions">
+                        <button class="cart-btn close-cart" id="closeCart">Continue Shopping</button>
+                        <button class="cart-btn checkout">Checkout</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add this modal right after the cart modal in menu.html -->
+            <div class="checkout-modal" id="checkoutModal">
+                <div class="checkout-content">
+                    <h3 class="checkout-title">Checkout</h3>
+                    <form id="checkoutForm">
+                        <div class="form-group">
+                            <label for="customerName">Name</label>
+                            <input type="text" id="customerName" name="customerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number</label>
+                            <input type="tel" id="phoneNumber" name="phoneNumber" required>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="tableNumber">Table Number</label>
+                            <input type="text" id="tableNumber" name="tableNumber" required>
+                        </div> -->
+                        <div class="form-group">
+                            <label for="numberOfPeople">Number of People</label>
+                            <input type="number" id="numberOfPeople" name="numberOfPeople" min="1" required>
+                        </div>
+                        <div class="payment-qr">
+                            <h4>Payment Information</h4>
+                            <img src="Extra/Payment.jpeg" alt="Payment QR Code" style="width: 100%; height: 100%;">
+                            <p>Please complete your payment before submitting the order</p>
+
+                            <div class="form-group">
+                                <label for="paymentProof">Upload Payment Screenshot</label>
+                                <input type="file" id="paymentProof" name="paymentProof" accept="image/*" required>
+                                <small>Upload a screenshot of your payment confirmation</small>
+                            </div>
+                        </div>
+                        <div class="checkout-actions">
+                            <button type="button" class="checkout-btn back-to-cart" id="backToCart">Back to
+                                Cart</button>
+                            <button type="submit" class="checkout-btn confirm-order">Confirm Order</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Soup Section -->
+            <div class="menu-section">
+                <div class="cart-header">
+                    <h3>Soups</h3>
+                    <div class="cart-icon" id="cartIcon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </div>
+                <div class="soup-notice">
+                    <i class="fas fa-info-circle"></i> Free soup included with any noodle order
+                </div>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Superior Soup"
+                            class="item-img" style="width: 180px;">
+                        <div class="item-info">
+                            <div class="item-name">Superior Soup</div>
+                            <div class="item-price">RM0.00 (with noodles)</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Hot & Sour Soup"
+                            class="item-img" style="width: 150px;">
+                        <div class="item-info">
+                            <div class="item-name">Hot & Sour Soup</div>
+                            <div class="item-price">RM0.00 (with noodles)</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Tomato Soup"
+                            class="item-img" style="width: 180px;">
+                        <div class="item-info">
+                            <div class="item-name">Tomato Soup</div>
+                            <div class="item-price">RM0.00 (with noodles)</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Spicy Soup"
+                            class="item-img" style="width: 180px;">
+                        <div class="item-info">
+                            <div class="item-name">Spicy Soup</div>
+                            <div class="item-price">RM0.00 (with noodles)</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Tom Yam"
+                            class="item-img" style="width: 180px;">
+                        <div class="item-info">
+                            <div class="item-name">Tom Yam</div>
+                            <div class="item-price">RM0.00 (with noodles)</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Noodle Section -->
+            <div class="menu-section">
+                <h3>Noodle Dishes</h3>
+                <div class="noodle-options">
+                    <div class="noodle-option selected" data-type="mixian">Mixian</div>
+                    <div class="noodle-option" data-type="mixian">Noodles</div>
+                    <div class="noodle-option" data-type="beehoon">Bee Hoon</div>
+                    <div class="noodle-option" data-type="kueyteow">Kuey Teow</div>
+                    <div class="noodle-option" data-type="silvernoodle">Silver Needle Noodles</div>
+                </div>
+
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="Noodles/N1.jpeg" alt="Fish Ball Noodles" class="item-img" style="width: 180px;">
+                        <div class="item-info">
+                            <div class="item-name">Fish Ball Noodles</div>
+                            <div class="item-price">RM11.90</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="Noodles/N8.png" alt="Fish Ball Pork Slice Noodles" class="item-img"
+                            style="width: 180px;">
+                        <div class="item-info">
+                            <div class="item-name">Fish Ball Pork Slice Noodles</div>
+                            <div class="item-price">RM12.90</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="Noodles/N7.png" alt="Fish Fillet" class="item-img" style="width: 180px;">
+                        <div class="item-info">
+                            <div class="item-name">Fish Fillet</div>
+                            <div class="item-price">RM16.90</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="Noodles/N3.jpeg" alt="Seafood Noodles" class="item-img" style="width: 180px;">
+                        <div class="item-info">
+                            <div class="item-name">Seafood Noodles</div>
+                            <div class="item-price">RM16.90</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="Noodles/N5.jpeg" alt="Dumplings Noodles" class="item-img" style="width: 180px;">
+                        <div class="item-info">
+                            <div class="item-name">Dumplings Noodles</div>
+                            <div class="item-price">RM13.90</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="Noodles/N6.png" alt="Vegetable Soup Noodles" class="item-img" style="width: 180px;">
+                        <div class="item-info">
+                            <div class="item-name">Vegetable Soup Noodles</div>
+                            <div class="item-price">RM11.90</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Fish Ball Pork Ball"
+                                class="item-img" style="width: 180px;">
+                            <div class="item-info">
+                                <div class="item-name">Fish Ball Pork Ball</div>
+                                <div class="item-price">RM12.90</div>
+                                <div class="cart-controls">
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                    <button class="add-to-cart">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png"
+                                alt="Fish Ball Pork Belly" class="item-img" style="width: 180px;">
+                            <div class="item-info">
+                                <div class="item-name">Fish Ball Pork Belly</div>
+                                <div class="item-price">RM13.90</div>
+                                <div class="cart-controls">
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                    <button class="add-to-cart">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Pork Ball Noodles"
+                                class="item-img" style="width: 180px;">
+                            <div class="item-info">
+                                <div class="item-name">Pork Ball Noodles</div>
+                                <div class="item-price">RM12.90</div>
+                                <div class="cart-controls">
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                    <button class="add-to-cart">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png"
+                                alt="Minced Pork Fish Ball" class="item-img" style="width: 180px;">
+                            <div class="item-info">
+                                <div class="item-name">Minced Pork Fish Ball</div>
+                                <div class="item-price">RM12.90</div>
+                                <div class="cart-controls">
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                    <button class="add-to-cart">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png"
+                                alt="Pork Slice Pork Ball" class="item-img" style="width: 180px;">
+                            <div class="item-info">
+                                <div class="item-name">Pork Slice Pork Ball</div>
+                                <div class="item-price">RM12.90</div>
+                                <div class="cart-controls">
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                    <button class="add-to-cart">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png"
+                                alt="Pork Belly Pork Ball" class="item-img" style="width: 180px;">
+                            <div class="item-info">
+                                <div class="item-name">Pork Belly Pork Ball</div>
+                                <div class="item-price">RM13.90</div>
+                                <div class="cart-controls">
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                    <button class="add-to-cart">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Pork Belly"
+                                class="item-img" style="width: 180px;">
+                            <div class="item-info">
+                                <div class="item-name">Pork Belly</div>
+                                <div class="item-price">RM13.90</div>
+                                <div class="cart-controls">
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                    <button class="add-to-cart">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Fish Paste Noodles"
+                                class="item-img" style="width: 180px;">
+                            <div class="item-info">
+                                <div class="item-name">Minced Pork Fish Ball</div>
+                                <div class="item-price">RM12.90</div>
+                                <div class="cart-controls">
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                    <button class="add-to-cart">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Rice Section -->
+            <div class="menu-section">
+                <h3>Rice Dishes</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="Rice/R1.jpeg" alt="Pork Minced Rice" class="item-img" style="width:180px;">
+                        <div class="item-info">
+                            <div class="item-name">Pork Minced Rice</div>
+                            <div class="item-price">RM13.90</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="Rice/R2.jpeg" alt="Braised Pork Rice" class="item-img" style="width:180px;">
+                        <div class="item-info">
+                            <div class="item-name">Braised Pork Rice</div>
+                            <div class="item-price">RM14.90</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="Rice/R3.jpeg" alt="Soybean Paste Eggplant Rice" class="item-img" style="width:180px;">
+                        <div class="item-info">
+                            <div class="item-name">Soybean Paste Eggplant Rice</div>
+                            <div class="item-price">RM14.90</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Tomato Egg Rice"
+                            class="item-img" style="width:180px;">
+                        <div class="item-info">
+                            <div class="item-name">Tomato Egg Rice</div>
+                            <div class="item-price">RM12.90</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drinks Section -->
+            <div class="menu-section">
+                <h3>Drinks</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="Drinks/D2.png" alt="Kopi" class="item-img" style="width: 110px; height: 210px;">
+                        <div class="item-info">
+                            <div class="item-name">Kopi</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM3.00</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM4.00</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="Drinks/D9.jpeg" alt="Lemonade" class="item-img" style="width: 110px; height: 210px;">
+                        <div class="item-info">
+                            <div class="item-name">Lemonade</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM3.00</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM4.00</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="Drinks/D7.png" alt="Milo" class="item-img" style="width: 110px; height: 210px;">
+                        <div class="item-info">
+                            <div class="item-name">Milo</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM3.80</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM5.40</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="Drinks/D8.png" alt="Lemon Tea" class="item-img" style="width: 150px; height: 210px;">
+                        <div class="item-info">
+                            <div class="item-name">Lemon Tea</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM3.40</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM4.60</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="Drinks/D4.jpeg" alt="Nescafe" class="item-img" style="width: 110px; height: 210px;">
+                        <div class="item-info">
+                            <div class="item-name">Nescafe</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM3.80</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM5.40</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="Drinks/D3.jpeg" alt="Three Layer Tea" class="item-img"
+                            style="width: 110px; height: 210px;">
+                        <div class="item-info">
+                            <div class="item-name">Three Layer Tea</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM5.40</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn1.npcdn.net/images/15832001823172a4f698bb79c39fb3bd072df63fd9.webp?md5id=51783435ce8f5bb47f2c2bc7ebc29eb1&new_width=1000&new_height=1000&w=1700551537&from=png"
+                            alt="Coco Cola" class="item-img" style="width: 100px; height: 210px;">
+                        <div class="item-info">
+                            <div class="item-name">Coco Cola</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM3.40</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj6PNFHq4yrksRVV4Avbdpnsa565bzrlsfsg&s"
+                            alt="100 Plus" class="item-img" style="width: 100px; height: 200px;">
+                        <div class="item-info">
+                            <div class="item-name">Coco Cola</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM3.40</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn1.npcdn.net/images/45383ca342346691b36966bfa8aa3b59_1670469267.png?md5id=51783435ce8f5bb47f2c2bc7ebc29eb1&new_width=1000&new_height=1000&w=1700551537"
+                            alt="Mineral Water" class="item-img" style="width: 100px; height: 210px;">
+                        <div class="item-info">
+                            <div class="item-name">Mineral Water</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM1.50</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Kopi O" class="item-img"
+                            style="width: 110px; height: 170px;">
+                        <div class="item-info">
+                            <div class="item-name">Kopi O</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM3.00</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM4.00</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Kopi C" class="item-img"
+                            style="width: 110px; height: 170px;">
+                        <div class="item-info">
+                            <div class="item-name">Kopi C</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM3.40</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM4.60</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Teh O" class="item-img"
+                            style="width: 110px; height: 170px;">
+                        <div class="item-info">
+                            <div class="item-name">Teh O</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM3.00</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM4.00</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Teh" class="item-img"
+                            style="width: 110px; height: 170px;">
+                        <div class="item-info">
+                            <div class="item-name">Teh</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM3.40</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM4.60</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Teh C" class="item-img"
+                            style="width: 110px; height: 170px;">
+                        <div class="item-info">
+                            <div class="item-name">Teh C</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM3.40</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM4.60</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Cham O" class="item-img"
+                            style="width: 110px; height: 170px;">
+                        <div class="item-info">
+                            <div class="item-name">Cham O</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM3.00</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM4.00</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Cham" class="item-img"
+                            style="width: 110px; height: 170px;">
+                        <div class="item-info">
+                            <div class="item-name">Cham</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM3.40</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM4.60</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Cham C" class="item-img"
+                            style="width: 110px; height: 170px;">
+                        <div class="item-info">
+                            <div class="item-name">Cham C</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM3.40</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM4.60</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Neslo" class="item-img"
+                            style="width: 110px; height: 170px;">
+                        <div class="item-info">
+                            <div class="item-name">Neslo</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM4.60</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM6.20</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Nestum" class="item-img"
+                            style="width: 110px; height: 170px;">
+                        <div class="item-info">
+                            <div class="item-name">Nestum</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM3.80</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM5.40</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png"
+                            alt="Hor Ka Sai (Milo + Kopi)" class="item-img" style="width: 110px; height: 170px;">
+                        <div class="item-info">
+                            <div class="item-name">Hor Ka Sai (Milo + Kopi)</div>
+                            <div class="drink-options">
+                                <div class="drink-option">
+                                    <span class="drink-type">Hot</span>
+                                    <span class="drink-price">RM4.60</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="drink-option">
+                                    <span class="drink-type">Cold</span>
+                                    <span class="drink-price">RM6.20</span>
+                                    <div class="quantity-controls">
+                                        <button class="decrease">-</button>
+                                        <span class="quantity">0</span>
+                                        <button class="increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" disabled>Add to Cart</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- Snacks Section -->
+            <div class="menu-section">
+                <h3>Snacks</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="Snacks/S1.jpeg" alt="Fish Ball Soup" class="item-img"
+                            style="width: 210px; height: 200px;">
+                        <div class="item-info">
+                            <div class="item-name">Fish Ball Soup (5pcs)</div>
+                            <div class="item-price">RM6.00</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="Snacks/S2.png" alt="Wonton" class="item-img" style="width: 210px; height: 200px;">
+                        <div class="item-info">
+                            <div class="item-name">Wonton (6pcs)</div>
+                            <div class="item-price">RM6.00</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Hakka Fried Pork Belly"
+                            class="item-img" style="width: 210px; height: 200px;">
+                        <div class="item-info">
+                            <div class="item-name">Hakka Fried Pork Belly</div>
+                            <div class="item-price">RM9.00</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Dumplings (3pcs)"
+                            class="item-img" style="width: 210px; height: 200px;">
+                        <div class="item-info">
+                            <div class="item-name">Dumplings (3pcs)</div>
+                            <div class="item-price">RM6.00</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png"
+                            alt="Soybean Paste Eggplant (2pcs)" class="item-img" style="width: 210px; height: 200px;">
+                        <div class="item-info">
+                            <div class="item-name">Soybean Paste Eggplant (2pcs)</div>
+                            <div class="item-price">RM6.00</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Fishcake"
+                            class="item-img" style="width: 210px; height: 200px;">
+                        <div class="item-info">
+                            <div class="item-name">Fishcake</div>
+                            <div class="item-price">RM8.00</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Seafood Bean Curd Roll"
+                            class="item-img" style="width: 210px; height: 200px;">
+                        <div class="item-info">
+                            <div class="item-name">Seafood Bean Curd Roll</div>
+                            <div class="item-price">RM7.00</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bread Section -->
+            <div class="menu-section">
+                <h3>Bread & Toast</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="Bread/B5.jpeg" alt="Kaya Butter Toast" class="item-img"
+                            style="width: 210px; height: 200px;">
+                        <div class="item-info">
+                            <div class="item-name">Kaya Butter Toast</div>
+                            <div class="item-price">RM3.00</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8634/8634777.png" alt="Giant Bun Kaya Butter"
+                            class="item-img" style="width: 210px; height: 200px;">
+                        <div class="item-info">
+                            <div class="item-name">Giant Bun Kaya Butter</div>
+                            <div class="item-price">RM3.40</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="Bread/B3.jpeg" alt="Croissant Kaya Butter" class="item-img"
+                            style="width: 210px; height: 200px;">
+                        <div class="item-info">
+                            <div class="item-name">Croissant Kaya Butter</div>
+                            <div class="item-price">RM6.80</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <img src="Bread/B1.jpeg" alt="Half Boiled Eggs" class="item-img"
+                            style="width: 210px; height: 200px;">
+                        <div class="item-info">
+                            <div class="item-name">Half Boiled Eggs</div>
+                            <div class="item-price">RM3.40</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Ons Section -->
+            <div class="menu-section">
+                <h3>Add Ons</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <div class="item-name">Egg</div>
+                            <div class="item-price">RM1.50</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <div class="item-name">Dumplings</div>
+                            <div class="item-price">RM4.00</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <div class="item-name">Pork Belly</div>
+                            <div class="item-price">RM5.00</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <div class="item-name">Pork Ball</div>
+                            <div class="item-price">RM2.40</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <div class="item-name">Enoki</div>
+                            <div class="item-price">RM2.50</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <div class="item-name">Fish Ball</div>
+                            <div class="item-price">RM2.40</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <div class="item-name">Pork Slice</div>
+                            <div class="item-price">RM4.00</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <div class="item-name">Vegetable</div>
+                            <div class="item-price">RM3.00</div>
+                            <div class="cart-controls">
+                                <div class="quantity-controls">
+                                    <button class="decrease">-</button>
+                                    <span class="quantity">0</span>
+                                    <button class="increase">+</button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="YuanFong.png" alt="Yuan Fong Restaurant Logo" class="footer-logo-img"
+                        style="width: 250px; height: 200px; margin-left: -40px;">
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="blog.html">News & Promotions</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> No.24, Jalan SS4D/14, Ss 4,
+                        <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 47301 Petaling Jaya, Selangor
+                    </p>
+                    <p><i class="fas fa-phone"></i> +60 12-515 0518</p>
+                    <p><i class="fas fa-envelope"></i> info@yuanfong.com</p>
+                    <p>
+                        <i class="fas fa-handshake"></i>
+                        Partnership with
+                        <a href="https://rookietechstudios.vercel.app" target="_blank"
+                            style="text-decoration: none; color: inherit; color: #b98d4b">
+                            <strong>Rookie Tech Studios</strong>
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Yuan Fong Restaurant. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Cart functionality with visual feedback
+        document.addEventListener('DOMContentLoaded', function () {
+            const API_BASE_URL = 'http://localhost:5000';
+            const cart = [];
+            const cartCount = document.getElementById('cartCount');
+            const cartIcon = document.getElementById('cartIcon');
+            const cartModal = document.getElementById('cartModal');
+            const closeCart = document.getElementById('closeCart');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const successMessage = document.getElementById('successMessage');
+            const checkoutModal = document.getElementById('checkoutModal');
+            const backToCart = document.getElementById('backToCart');
+            const checkoutForm = document.getElementById('checkoutForm');
+            const checkoutBtn = document.querySelector('.checkout');
+
+            // Show success message
+            function showSuccessMessage(text = 'Successfully added to cart!') {
+                successMessage.textContent = text;
+                successMessage.classList.add('show');
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 2000);
+            }
+
+            // Update cart count
+            function updateCartCount() {
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                cartCount.textContent = totalItems;
+            }
+
+            // Update cart modal
+            function updateCartModal() {
+                cartItems.innerHTML = '';
+                let total = 0;
+
+                if (cart.length === 0) {
+                    cartItems.innerHTML = '<p>Your cart is empty</p>';
+                    cartTotal.textContent = 'Total: RM0.00';
+                    return;
+                }
+
+                cart.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'cart-item';
+
+                    const itemName = document.createElement('div');
+                    itemName.className = 'cart-item-name';
+                    itemName.textContent = item.name;
+
+                    const itemQuantity = document.createElement('div');
+                    itemQuantity.className = 'cart-item-quantity';
+                    itemQuantity.textContent = `x${item.quantity}`;
+
+                    const itemPrice = document.createElement('div');
+                    itemPrice.className = 'cart-item-price';
+                    itemPrice.textContent = `RM${(item.price * item.quantity).toFixed(2)}`;
+
+                    itemElement.appendChild(itemName);
+                    itemElement.appendChild(itemQuantity);
+                    itemElement.appendChild(itemPrice);
+
+                    cartItems.appendChild(itemElement);
+
+                    total += item.price * item.quantity;
+                });
+
+                cartTotal.textContent = `Total: RM${total.toFixed(2)}`;
+            }
+
+            // Add to cart functionality for all items
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.removeAttribute('disabled');
+
+                button.addEventListener('click', function () {
+                    const item = this.closest('.menu-item');
+                    const itemName = item.querySelector('.item-name').textContent;
+                    let itemsAdded = 0;
+
+                    // Check if this is a drink item
+                    const isDrink = item.querySelector('.drink-options') !== null;
+
+                    if (isDrink) {
+                        // Handle drink items
+                        const drinkOptions = item.querySelectorAll('.drink-option');
+                        drinkOptions.forEach(option => {
+                            const quantity = parseInt(option.querySelector('.quantity').textContent);
+                            if (quantity > 0) {
+                                const type = option.querySelector('.drink-type').textContent;
+                                const priceText = option.querySelector('.drink-price').textContent;
+                                const price = parseFloat(priceText.replace('RM', ''));
+
+                                // Add to cart
+                                cart.push({
+                                    name: `${itemName} (${type})`,
+                                    price: price,
+                                    quantity: quantity
+                                });
+
+                                // Reset quantity
+                                option.querySelector('.quantity').textContent = '0';
+                                itemsAdded++;
+                            }
+                        });
+
+                        if (itemsAdded === 0) {
+                            alert('Please select at least 1 quantity for the drink');
+                            return;
+                        }
+                    } else {
+                        // Handle regular food items
+                        const quantity = parseInt(item.querySelector('.quantity').textContent);
+                        if (quantity > 0) {
+                            const priceText = item.querySelector('.item-price').textContent;
+                            const priceMatch = priceText.match(/RM(\d+\.\d{2})/);
+
+                            if (!priceMatch) {
+                                alert('Could not determine price for this item');
+                                return;
+                            }
+
+                            const price = parseFloat(priceMatch[1]);
+
+                            // Check if item already exists in cart
+                            const existingItem = cart.find(i => i.name === itemName && i.price === price);
+
+                            if (existingItem) {
+                                existingItem.quantity += quantity;
+                            } else {
+                                cart.push({
+                                    name: itemName,
+                                    price: price,
+                                    quantity: quantity
+                                });
+                            }
+
+                            // Reset quantity and selection
+                            item.querySelector('.quantity').textContent = '0';
+                            item.classList.remove('selected');
+                            itemsAdded++;
+                        } else {
+                            alert('Please select at least 1 quantity');
+                            return;
+                        }
+                    }
+
+                    if (itemsAdded > 0) {
+                        updateCartCount();
+                        showSuccessMessage();
+                    }
+                });
+            });
+
+            // Quantity controls for all items
+            document.querySelectorAll('.increase').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const quantityElement = this.parentElement.querySelector('.quantity');
+                    let quantity = parseInt(quantityElement.textContent);
+                    quantityElement.textContent = quantity + 1;
+
+                    // Update selection state
+                    const menuItem = this.closest('.menu-item');
+                    if (menuItem && !menuItem.querySelector('.drink-options')) {
+                        menuItem.classList.add('selected');
+                    }
+
+                    // Enable the corresponding add to cart button for drinks
+                    if (menuItem) {
+                        const addToCartBtn = menuItem.querySelector('.add-to-cart');
+                        if (addToCartBtn) {
+                            addToCartBtn.removeAttribute('disabled');
+                        }
+                    }
+                });
+            });
+
+            document.querySelectorAll('.decrease').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const quantityElement = this.parentElement.querySelector('.quantity');
+                    let quantity = parseInt(quantityElement.textContent);
+                    if (quantity > 0) {
+                        quantityElement.textContent = quantity - 1;
+
+                        // Update selection state if quantity reaches 0
+                        if (quantity - 1 === 0) {
+                            const menuItem = this.closest('.menu-item');
+                            if (menuItem && !menuItem.querySelector('.drink-options')) {
+                                menuItem.classList.remove('selected');
+                            }
+                        }
+                    }
+                });
+            });
+
+            // Update drink add to cart buttons based on quantity
+            function updateDrinkButtons() {
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    const drinkOptions = item.querySelector('.drink-options');
+                    if (drinkOptions) {
+                        const addToCartBtn = item.querySelector('.add-to-cart');
+                        const options = item.querySelectorAll('.drink-option');
+                        let hasQuantity = false;
+
+                        options.forEach(option => {
+                            const quantity = parseInt(option.querySelector('.quantity').textContent);
+                            if (quantity > 0) {
+                                hasQuantity = true;
+                            }
+                        });
+
+                        if (hasQuantity) {
+                            addToCartBtn.removeAttribute('disabled');
+                        } else {
+                            addToCartBtn.setAttribute('disabled', '');
+                        }
+                    }
+                });
+            }
+
+            // Initial update of drink buttons
+            updateDrinkButtons();
+
+            // Add event listeners to drink quantity buttons to update add to cart status
+            document.querySelectorAll('.drink-options .quantity-controls button').forEach(button => {
+                button.addEventListener('click', updateDrinkButtons);
+            });
+
+            // Noodle type selection
+            document.querySelectorAll('.noodle-option').forEach(option => {
+                option.addEventListener('click', function () {
+                    document.querySelectorAll('.noodle-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+            });
+
+            // Cart icon click
+            cartIcon.addEventListener('click', function () {
+                updateCartModal();
+                cartModal.style.display = 'flex';
+            });
+
+            // Close cart modal
+            closeCart.addEventListener('click', function () {
+                cartModal.style.display = 'none';
+            });
+
+            // Close modal when clicking outside
+            cartModal.addEventListener('click', function (e) {
+                if (e.target === cartModal) {
+                    cartModal.style.display = 'none';
+                }
+            });
+
+            // Checkout button click
+            checkoutBtn.addEventListener('click', function () {
+                if (cart.length === 0) {
+                    alert('Your cart is empty');
+                    return;
+                }
+                cartModal.style.display = 'none';
+                checkoutModal.style.display = 'flex';
+            });
+
+            // Back to cart button
+            backToCart.addEventListener('click', function () {
+                checkoutModal.style.display = 'none';
+                cartModal.style.display = 'flex';
+            });
+
+            // Close checkout modal when clicking outside
+            checkoutModal.addEventListener('click', function (e) {
+                if (e.target === checkoutModal) {
+                    checkoutModal.style.display = 'none';
+                }
+            });
+
+            // Form submission
+            checkoutForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                // In the checkout form submission handler:
+                const customerName = document.getElementById('customerName').value.trim();
+                const phoneNumber = document.getElementById('phoneNumber').value.trim();
+                const numberOfPeople = parseInt(document.getElementById('numberOfPeople').value);
+                const paymentProof = document.getElementById('paymentProof').files[0];
+
+                if (!customerName || !phoneNumber || isNaN(numberOfPeople) || numberOfPeople < 1 || !paymentProof) {
+                    alert('Please fill in all fields correctly and upload payment proof');
+                    return;
+                }
+
+                try {
+                    // Create FormData to handle file upload
+                    const formData = new FormData();
+                    formData.append('customerName', customerName);
+                    formData.append('phoneNumber', phoneNumber);
+                    formData.append('numberOfPeople', numberOfPeople);
+                    formData.append('items', JSON.stringify(cart));
+                    formData.append('paymentProof', paymentProof);
+
+                    const response = await fetch(`${API_BASE_URL}/api/orders`, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to submit order');
+                    }
+
+                    const order = await response.json();
+
+                    // Show success message
+                    const orderSuccess = document.createElement('div');
+                    orderSuccess.className = 'order-success-message';
+                    orderSuccess.innerHTML = `
+                        <div class="success-content">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>Order Submitted Successfully!</h3>
+                            <p>Your order #${order.id} has been received and is being processed.</p>
+                            <button onclick="this.parentElement.parentElement.remove()">OK</button>
+                        </div>
+                    `;
+                    document.body.appendChild(orderSuccess);
+
+                    // Add CSS for the success message
+                    const styleElement = document.createElement('style');
+                    styleElement.innerHTML = `
+                        .order-success-message {
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background: rgba(0,0,0,0.8);
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            z-index: 2000;
+                        }
+                        .order-success-message .success-content {
+                            background: white;
+                            padding: 30px;
+                            border-radius: 10px;
+                            text-align: center;
+                            max-width: 400px;
+                        }
+                        .order-success-message i {
+                            color: #4CAF50;
+                            font-size: 4rem;
+                            margin-bottom: 20px;
+                        }
+                        .order-success-message h3 {
+                            color: #333;
+                            margin-bottom: 10px;
+                        }
+                        .order-success-message button {
+                            background: #b98d4b;
+                            color: white;
+                            border: none;
+                            padding: 10px 20px;
+                            border-radius: 5px;
+                            margin-top: 20px;
+                            cursor: pointer;
+                        }
+                    `;
+                    document.head.appendChild(styleElement);
+
+                    // Clear the cart
+                    cart.length = 0;
+                    updateCartCount();
+                    updateCartModal();
+                    checkoutModal.style.display = 'none';
+                    checkoutForm.reset();
+                } catch (err) {
+                    console.error('Error submitting order:', err);
+                    alert('Error submitting order. Please try again.');
+                }
+            });
+
+            // Visual feedback for menu item selection
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.addEventListener('click', function (e) {
+                    if (e.target.closest('.quantity-controls') || e.target.closest('.add-to-cart')) {
+                        return;
+                    }
+
+                    if (!item.querySelector('.drink-options')) {
+                        const quantityElement = item.querySelector('.quantity');
+                        if (parseInt(quantityElement.textContent) === 0) {
+                            quantityElement.textContent = '1';
+                            item.classList.add('selected');
+                        } else {
+                            quantityElement.textContent = '0';
+                            item.classList.remove('selected');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
