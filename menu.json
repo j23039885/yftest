@@ -1,0 +1,103 @@
+{
+  "noodles": [
+    { "code": "FB001", "name": "Fish Ball Noodles", "price": 11.9 },
+    { "code": "FB002", "name": "Fish Ball Pork Slice", "price": 12.9 },
+    { "code": "FB003", "name": "Fish Ball Pork Belly", "price": 13.9 },
+    { "code": "FB004", "name": "Fish Ball Pork Ball", "price": 13.9 },
+    { "code": "FB005", "name": "Minced Pork Fish Ball", "price": 12.9 },
+    { "code": "PN001", "name": "Pork Noodles", "price": 12.9 },
+    { "code": "PN002", "name": "Pork Slice Pork Ball", "price": 12.9 },
+    { "code": "PN003", "name": "Pork Belly Pork Ball", "price": 13.9 },
+    { "code": "PN004", "name": "Pork Belly", "price": 13.9 },
+    { "code": "SN001", "name": "Fish Paste Noodles", "price": 12.9 },
+    { "code": "SN002", "name": "Fish Fillet", "price": 16.9 },
+    { "code": "SN003", "name": "Seafood Noodles", "price": 16.9 },
+    { "code": "ON001", "name": "Dumplings Noodles", "price": 13.9 },
+    { "code": "ON002", "name": "Vegetable Soup Noodles", "price": 11.9 }
+  ],
+  "soups": [
+    "Superior Soup",
+    "Hot Sour Soup",
+    "Tomato Soup",
+    "Spicy Soup",
+    "Tomyam"
+  ],
+  "noodleTypes": [
+    "Mixian",
+    "Noodles",
+    "Bee Hoon",
+    "Kuey Teow",
+    "Silver Needle Noodles"
+  ],
+  "rice": [
+    { "code": "ON003", "name": "Tomato Egg Rice", "price": 12.9 },
+    { "code": "RS001", "name": "Pork Minced Rice", "price": 13.9 },
+    { "code": "RS002", "name": "Braised Pork Rice", "price": 14.9 },
+    { "code": "RS003", "name": "Soybean Paste Eggplant Rice", "price": 14.9 }
+  ],
+  "addOns": [
+    { "name": "Eggs", "price": 1.5 },
+    { "name": "Fish Ball", "price": 2.4 },
+    { "name": "Dumplings", "price": 2.4 },
+    { "name": "Pork Ball", "price": 2.4 },
+    { "name": "Pork Slice", "price": 4 },
+    { "name": "Pork Belly", "price": 5 },
+    { "name": "Vegetable", "price": 3 },
+    { "name": "Enoki", "price": 2.5 }
+  ],
+  "snacks": [
+    { "code": "S001", "name": "Fish Ball Soup (5pcs)", "price": 6 },
+    { "code": "S002", "name": "Wantan (6pcs)", "price": 6 },
+    { "code": "S003", "name": "Dumplings (3pcs)", "price": 6 },
+    { "code": "S004", "name": "Soybean Paste Eggplant (2pcs)", "price": 6 },
+    { "code": "S005", "name": "Fishcake", "price": 6 },
+    { "code": "S006", "name": "Seafood Bean Curd Roll", "price": 7 },
+    { "code": "S007", "name": "Hakka Fried Pork Belly", "price": 9 },
+    { "code": "B001", "name": "Kaya Butter Toast", "price": 3 },
+    { "code": "B002", "name": "Giant Bun Kaya Butter", "price": 3.4 },
+    { "code": "B003", "name": "Croissant Kaya Butter", "price": 6.8 },
+    { "code": "E001", "name": "Half Boiled Eggs", "price": 3.4 }
+  ],
+  "drinks": {
+    "hot": [
+      { "code": "D001", "name": "Kopi O", "price": 3 },
+      { "code": "D002", "name": "Kopi", "price": 3.4 },
+      { "code": "D003", "name": "Kopi C", "price": 3.4 },
+      { "code": "D004", "name": "Teh O", "price": 3 },
+      { "code": "D005", "name": "Teh", "price": 3.4 },
+      { "code": "D006", "name": "Teh C", "price": 3.4 },
+      { "code": "D007", "name": "Cham O", "price": 3 },
+      { "code": "D008", "name": "Cham", "price": 3.4 },
+      { "code": "D009", "name": "Cham C", "price": 3.4 },
+      { "code": "D010", "name": "Teh O Lemon", "price": 3.4 },
+      { "code": "D011", "name": "Milo", "price": 3.8 },
+      { "code": "D012", "name": "Nescafe", "price": 3.8 },
+      { "code": "D013", "name": "Neslo", "price": 3.8 },
+      { "code": "D014", "name": "Nestum", "price": 3.8 },
+      { "code": "D015", "name": "Hor Ka Sai (Milo + Kopi)", "price": 4.6 },
+      { "code": "D019", "name": "Lemonade", "price": 3 }
+    ],
+    "cold": [
+      { "code": "D001", "name": "Kopi O", "price": 4 },
+      { "code": "D002", "name": "Kopi", "price": 4 },
+      { "code": "D003", "name": "Kopi C", "price": 4.6 },
+      { "code": "D004", "name": "Teh O", "price": 4 },
+      { "code": "D005", "name": "Teh", "price": 4 },
+      { "code": "D006", "name": "Teh C", "price": 4.6 },
+      { "code": "D007", "name": "Cham O", "price": 4 },
+      { "code": "D008", "name": "Cham", "price": 4 },
+      { "code": "D009", "name": "Cham C", "price": 4.6 },
+      { "code": "D010", "name": "Teh O Lemon", "price": 4.6 },
+      { "code": "D011", "name": "Milo", "price": 4 },
+      { "code": "D012", "name": "Nescafe", "price": 4 },
+      { "code": "D013", "name": "Neslo", "price": 4 },
+      { "code": "D014", "name": "Nestum", "price": 4 },
+      { "code": "D015", "name": "Hor Ka Sai (Milo + Kopi)", "price": 4.6 },
+      { "code": "D016", "name": "Coca Cola", "price": 3.4 },
+      { "code": "D017", "name": "100 Plus", "price": 3.4 },
+      { "code": "D018", "name": "Mineral Water", "price": 1.5 },
+      { "code": "D019", "name": "Lemonade", "price": 4 },
+      { "code": "D020", "name": "Three Layer Tea", "price": 5.4 }
+    ]
+  }
+}

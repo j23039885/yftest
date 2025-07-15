@@ -105,15 +105,7 @@
                         <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 47301 Petaling Jaya, Selangor
                     </p>
                     <p><i class="fas fa-phone"></i> +60 12-515 0518</p>
-                    <p><i class="fas fa-envelope"></i> info@yuanfong.com</p>
-                    <p>
-                        <i class="fas fa-handshake"></i>
-                        Partnership with
-                        <a href="https://rookietechstudios.vercel.app" target="_blank"
-                            style="text-decoration: none; color: inherit; color: #b98d4b">
-                            <strong>Rookie Tech Studios</strong>
-                        </a>
-                    </p>
+                    <p><i class="fas fa-envelope"></i> yuanfongss4@gmail.com</p>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -123,6 +115,39 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            try {
+                const blogGrid = document.querySelector('.blog-grid');
+                const hardcodedPosts = blogGrid.innerHTML; // Preserve existing posts
+
+                const response = await fetch('https://yftest.onrender.com/api/promotions');
+                const promotions = await response.json();
+
+                if (promotions.length > 0) {
+                    let dynamicContent = '';
+                    promotions.forEach(promo => {
+                        dynamicContent += `
+                  <div class="blog-post">
+                    <div class="blog-image">
+                      <img src="${promo.imageUrl || 'images/default-promo.jpg'}" alt="${promo.title}">
+                    </div>
+                    <div class="blog-content">
+                      <h3>${promo.title}</h3>
+                      <p class="blog-date">${new Date(promo.date).toLocaleDateString()}</p>
+                      <p style="text-align: justify;">${promo.description}</p>
+                    </div>
+                  </div>
+                `;
+                    });
+                    blogGrid.innerHTML = hardcodedPosts + dynamicContent;
+                }
+            } catch (err) {
+                console.error('Failed to load promotions:', err);
+                // Hardcoded posts remain visible
+            }
+        });
+    </script>
 </body>
 
 </html>
