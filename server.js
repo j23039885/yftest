@@ -4,10 +4,13 @@ const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
 const fs = require("fs");
 const multer = require("multer");
-const admin = require("firebase-admin");
+
 
 // 🔐 Load Firebase service account
-const serviceAccount = require("./serviceaccountkey.json");
+const admin = require("firebase-admin");
+
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
