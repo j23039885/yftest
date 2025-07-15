@@ -87,21 +87,6 @@ db.serialize(() => {
       timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
-
-  // ✅ NEW: completed_orders table
-  db.run(`
-    CREATE TABLE IF NOT EXISTS completed_orders (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      customerName TEXT NOT NULL,
-      phoneNumber TEXT NOT NULL,
-      numberOfPeople INTEGER,
-      items TEXT NOT NULL,
-      status TEXT,
-      timestamp DATETIME,
-      paymentProof TEXT,
-      verified BOOLEAN
-    )
-  `);
 });
 
 // ====================== ORDERS API ======================
@@ -191,7 +176,7 @@ app.post("/api/orders", upload.single("paymentProof"), (req, res) => {
   }
 });
 
-// ✅ UPDATE order status + copy completed orders
+// ✅ UPDATE order status
 app.put("/api/orders/:id/status", (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
@@ -205,32 +190,6 @@ app.put("/api/orders/:id/status", (req, res) => {
   db.run(sql, [status, id], function (err) {
     if (err) return res.status(500).json({ error: err.message });
     if (this.changes === 0) return res.status(404).json({ error: "Order not found" });
-
-    // ✅ If marking completed, copy into completed_orders table
-    if (status === "completed") {
-      db.get(`SELECT * FROM orders WHERE id = ?`, [id], (err, row) => {
-        if (!err && row) {
-          db.run(
-            `INSERT INTO completed_orders (customerName, phoneNumber, numberOfPeople, items, status, timestamp, paymentProof, verified)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-            [
-              row.customerName,
-              row.phoneNumber,
-              row.numberOfPeople,
-              row.items,
-              row.status,
-              row.timestamp,
-              row.paymentProof,
-              row.verified
-            ],
-            (err2) => {
-              if (err2) console.error("❌ Error saving completed order:", err2.message);
-              else console.log(`✅ Order #${id} copied to completed_orders`);
-            }
-          );
-        }
-      });
-    }
 
     res.json({ success: true, message: `Order status updated to ${status}` });
   });
@@ -275,9 +234,11 @@ app.delete("/api/orders/completed", (req, res) => {
   });
 });
 
-// ✅ NEW: Upload completed orders → Firestore
+// ✅ NEW: Upload completed orders → Firestore directly from `orders`
 app.post("/api/upload-completed-orders", (req, res) => {
-  db.all("SELECT * FROM completed_orders", async (err, rows) => {
+  const sql = "SELECT * FROM orders WHERE status = 'completed'";
+
+  db.all(sql, async (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
     if (!rows.length) return res.json({ success: true, message: "No completed orders to upload." });
 
@@ -306,8 +267,10 @@ app.post("/api/upload-completed-orders", (req, res) => {
       message: `✅ Uploaded ${uploadedCount} completed orders to Firebase`
     });
 
-    // ✅ Auto-clear after upload
-    db.run("DELETE FROM completed_orders", () => console.log("🗑️ Cleared completed_orders after upload"));
+    // ✅ Optional auto-clear after upload
+    db.run("DELETE FROM orders WHERE status='completed'", () =>
+      console.log("🗑️ Cleared completed orders from SQLite after upload")
+    );
   });
 });
 
