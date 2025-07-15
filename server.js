@@ -5,24 +5,40 @@ const path = require("path");
 const fs = require("fs");
 const multer = require("multer");
 
-//  Firebase imports
-const { initializeApp } = require("firebase/app");
-const { getFirestore, collection, addDoc } = require("firebase/firestore");
+// ✅ Use Firebase Admin SDK (NOT client SDK)
+const admin = require("firebase-admin");
 
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyBagIcddt7BjkYsvC33BqDQfMzsFdjy5D0",
-  authDomain: "yuanfong-84448.firebaseapp.com",
-  projectId: "yuanfong-84448",
-  storageBucket: "yuanfong-84448.firebasestorage.app",
-  messagingSenderId: "743419868803",
-  appId: "1:743419868803:web:b0c2548633927bd302cdb6",
-  measurementId: "G-HCBLT09FXN"
-};
+// ✅ Load your service account key (make sure this path is correct)
+const serviceAccount = require("./path/to/your/serviceKey.json");
 
-//  Init Firebase + Firestore
-const firebaseApp = initializeApp(firebaseConfig);
-const firestoreDb = getFirestore(firebaseApp);
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
+// ✅ Firestore reference (admin)
+const firestoreDb = admin.firestore();
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// Example: Firestore add route (you can modify for your use)
+app.post("/uploadOrder", async (req, res) => {
+  try {
+    const data = req.body;
+
+    // Example Firestore write
+    const docRef = await firestoreDb.collection("orders").add({
+      ...data,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    res.status(200).json({ message: "Order uploaded", id: docRef.id });
+  } catch (err) {
+    console.error("Upload error:", err);
+    res.status(500).json({ error: "Upload failed" });
+  }
+});
 
 // Express setup
 const app = express();
