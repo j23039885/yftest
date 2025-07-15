@@ -40,8 +40,7 @@ app.post("/uploadOrder", async (req, res) => {
   }
 });
 
-// Express setup
-const app = express();
+
 
 // Multer storage
 const storage = multer.diskStorage({
