@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fetch + Upload Completed Orders → Firestore</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    h1 { color: #333; }
+    .btn { background: #007BFF; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; margin: 10px 5px 20px 0; }
+    .btn.green { background: green; }
+    table { width: 100%; border-collapse: collapse; background: white; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+    th { background: #eee; }
+    .message { margin-top: 15px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Completed Orders → Firestore (Frontend Only)</h1>
+
+  <!-- Action Buttons -->
+  <button id="fetchBtn" class="btn">🔄 Fetch Completed Orders</button>
+  <button id="uploadBtn" class="btn green">⬆ Upload to Firestore</button>
+
+  <!-- Orders Table -->
+  <div id="ordersContainer">No orders loaded yet.</div>
+  <div id="message" class="message"></div>
+
+  <!-- ✅ Firebase Client SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    // ✅ Your Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBagIcddt7BjkYsvC33BqDQfMzsFdjy5D0",
+      authDomain: "yuanfong-84448.firebaseapp.com",
+      projectId: "yuanfong-84448",
+    };
+
+    // ✅ Init Firestore (client)
+    const app = initializeApp(firebaseConfig);
+    const firestore = getFirestore(app);
+
+    // ✅ Backend API URL
+    const API_BASE = "https://mbserver.onrender.com";
+
+    let completedOrders = []; // stores fetched completed orders
+
+    // ✅ Fetch completed orders JSON
+    async function fetchCompletedOrders() {
+      const container = document.getElementById("ordersContainer");
+      container.innerHTML = "⏳ Loading completed orders...";
+
+      try {
+        const res = await fetch(`${API_BASE}/api/orders/completed`);
+        const data = await res.json();
+
+        // some APIs might return {orders:[]} so check structure
+        completedOrders = Array.isArray(data) ? data : data.orders || [];
+
+        if (!completedOrders.length) {
+          container.innerHTML = "<p>✅ No completed orders yet.</p>";
+          return;
+        }
+
+        // build table
+        let html = `<table>
+          <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Items</th>
+            <th>Total (RM)</th>
+            <th>Timestamp</th>
+          </tr>`;
+
+        completedOrders.forEach(order => {
+          const itemsList = order.items.map(i => `${i.name} x${i.quantity}`).join(", ");
+          const total = order.items.reduce((sum, i) => sum + (i.price * i.quantity), 0).toFixed(2);
+
+          html += `<tr>
+            <td>${order.id || "-"}</td>
+            <td>${order.customerName || "-"}</td>
+            <td>${order.phoneNumber || "-"}</td>
+            <td>${itemsList}</td>
+            <td>${total}</td>
+            <td>${order.timestamp || "-"}</td>
+          </tr>`;
+        });
+
+        html += "</table>";
+        container.innerHTML = html;
+      } catch (err) {
+        console.error("❌ Error fetching orders", err);
+        container.innerHTML = `<p style="color:red;">Failed to fetch orders. Check console.</p>`;
+      }
+    }
+
+    // ✅ Upload fetched JSON directly to Firestore
+    async function uploadToFirestore() {
+      const msg = document.getElementById("message");
+
+      if (!completedOrders.length) {
+        msg.textContent = "⚠️ No completed orders loaded yet. Fetch first.";
+        return;
+      }
+
+      msg.textContent = `⏳ Uploading ${completedOrders.length} orders to Firestore...`;
+
+      let uploaded = 0;
+
+      for (const order of completedOrders) {
+        try {
+          await addDoc(collection(firestore, "completed_orders"), order);
+          console.log(`✅ Uploaded order ${order.id}`);
+          uploaded++;
+        } catch (err) {
+          console.error(`❌ Failed to upload order ${order.id}`, err);
+        }
+      }
+
+      msg.textContent = `✅ Uploaded ${uploaded}/${completedOrders.length} completed orders to Firestore.`;
+    }
+
+    // ✅ Attach event listeners after DOM loads
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("fetchBtn").addEventListener("click", fetchCompletedOrders);
+      document.getElementById("uploadBtn").addEventListener("click", uploadToFirestore);
+      console.log("✅ Buttons ready");
+    });
+  </script>
+</body>
+</html>
