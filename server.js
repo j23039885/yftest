@@ -293,6 +293,178 @@ app.post("/api/upload-completed-orders", (req, res) => {
   });
 });
 
+app.get("/api/menu", (req, res) => {
+  const sql = `SELECT * FROM menu ORDER BY type, name`;
+
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    const menuItems = rows.map((row) => ({
+      ...row,
+      imageUrl: row.imagePath
+        ? `${req.protocol}://${req.get("host")}/uploads/${row.imagePath}`
+        : null,
+    }));
+
+    res.json(menuItems);
+  });
+});
+
+// POST new menu item
+app.post("/api/menu", upload.single("image"), (req, res) => {
+  const { name, type, price } = req.body;
+  const image = req.file;
+
+  if (!name || !type || !price) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  const sql = `INSERT INTO menu (name, type, price, imagePath) 
+               VALUES (?, ?, ?, ?)`;
+
+  db.run(
+    sql,
+    [name, type, parseFloat(price), image ? image.filename : null],
+    function (err) {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+
+      res.status(201).json({
+        id: this.lastID,
+        name,
+        type,
+        price: parseFloat(price),
+        imageUrl: image
+          ? `${req.protocol}://${req.get("host")}/uploads/${image.filename}`
+          : null,
+        timestamp: new Date().toISOString(),
+      });
+    }
+  );
+});
+
+// DELETE menu item
+app.delete("/api/menu/:id", (req, res) => {
+  const { id } = req.params;
+
+  // First get the menu item to delete its image file
+  db.get(`SELECT imagePath FROM menu WHERE id = ?`, [id], (err, row) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    if (!row) {
+      return res.status(404).json({ error: "Menu item not found" });
+    }
+
+    // Delete the image file if it exists
+    if (row.imagePath) {
+      const imagePath = path.join(__dirname, "uploads", row.imagePath);
+      fs.unlink(imagePath, (err) => {
+        if (err) console.error("Error deleting image:", err);
+      });
+    }
+
+    // Now delete the menu item
+    db.run(`DELETE FROM menu WHERE id = ?`, [id], function (err) {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+
+      res.json({ success: true, message: "Menu item deleted" });
+    });
+  });
+});
+
+// Promotions Routes
+
+// GET all promotions
+app.get("/api/promotions", (req, res) => {
+  const sql = `SELECT * FROM promotions ORDER BY date DESC`;
+
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    const promotions = rows.map((row) => ({
+      ...row,
+      imageUrl: row.imagePath
+        ? `${req.protocol}://${req.get("host")}/uploads/${row.imagePath}`
+        : null,
+    }));
+
+    res.json(promotions);
+  });
+});
+
+// POST new promotion
+app.post("/api/promotions", upload.single("image"), (req, res) => {
+  const { title, description, date } = req.body;
+  const image = req.file;
+
+  if (!title || !description || !date || !image) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  const sql = `INSERT INTO promotions (title, description, imagePath, date) 
+               VALUES (?, ?, ?, ?)`;
+
+  db.run(sql, [title, description, image.filename, date], function (err) {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    res.status(201).json({
+      id: this.lastID,
+      title,
+      description,
+      date,
+      imageUrl: `${req.protocol}://${req.get("host")}/uploads/${
+        image.filename
+      }`,
+      timestamp: new Date().toISOString(),
+    });
+  });
+});
+
+// DELETE promotion
+app.delete("/api/promotions/:id", (req, res) => {
+  const { id } = req.params;
+
+  // First get the promotion to delete its image file
+  db.get(`SELECT imagePath FROM promotions WHERE id = ?`, [id], (err, row) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    if (!row) {
+      return res.status(404).json({ error: "Promotion not found" });
+    }
+
+    // Delete the image file
+    if (row.imagePath) {
+      const imagePath = path.join(__dirname, "uploads", row.imagePath);
+      fs.unlink(imagePath, (err) => {
+        if (err) console.error("Error deleting image:", err);
+      });
+    }
+
+    // Now delete the promotion
+    db.run(`DELETE FROM promotions WHERE id = ?`, [id], function (err) {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+
+      res.json({ success: true, message: "Promotion deleted" });
+    });
+  });
+});
+
+
 
 // Root route
 app.get("/", (req, res) => {
