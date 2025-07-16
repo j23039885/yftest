@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <style>
+    :root {
+      --primary-color: #b98d4b;
+      --secondary-color: #8b0000;
+      --light-color: #f8f4e9;
+      --dark-color: #333;
+      --gray-color: #666;
+      --light-gray: #eee;
+      --body-color: #fff;
+      --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: var(--body-color);
+      border-radius: 10px;
+      box-shadow: var(--box-shadow);
+      padding: 30px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    h1 {
+      color: var(--secondary-color);
+      font-size: 2.5rem;
+    }
+
+    .orders-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .order-card {
+      background-color: var(--body-color);
+      border-radius: 8px;
+      box-shadow: var(--box-shadow);
+      padding: 20px;
+      border-left: 5px solid var(--primary-color);
+    }
+
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .customer-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--secondary-color);
+    }
+
+    .order-number {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .order-info {
+      margin-bottom: 15px;
+    }
+
+    .items-list {
+      background-color: var(--light-color);
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .status-pending {
+      background-color: #FFC107;
+      color: #333;
+    }
+
+    .status-preparing {
+      background-color: #2196F3;
+      color: white;
+    }
+
+    .status-ready {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .status-completed {
+      background-color: #9E9E9E;
+      color: white;
+    }
+
+    .timestamp {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: var(--gray-color);
+    }
+
+    .order-total {
+      margin-top: 10px;
+      padding-top: 5px;
+      border-top: 1px dashed var(--light-gray);
+      font-weight: bold;
+    }
+
+    .order-actions select {
+      padding: 5px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--light-gray);
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      font-size: 1.2rem;
+      color: var(--gray-color);
+    }
+
+    .no-orders {
+      text-align: center;
+      padding: 40px;
+      font-size: 1.2rem;
+      color: var(--gray-color);
+      grid-column: 1 / -1;
+    }
+
+    .error-message {
+      text-align: center;
+      padding: 40px;
+      font-size: 1.2rem;
+      color: #d32f2f;
+      grid-column: 1 / -1;
+    }
+
+    .refresh-button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .refresh-button:hover {
+      opacity: 0.9;
+    }
+
+    .clear-button {
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-left: 10px;
+    }
+
+    .clear-button:hover {
+      opacity: 0.9;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      max-width: 400px;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .notification.success {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .notification.error {
+      background-color: #d32f2f;
+      color: white;
+    }
+
+    /* Login Form Styles */
+    .login-container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: var(--body-color);
+      border-radius: 10px;
+      box-shadow: var(--box-shadow);
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .login-form h2 {
+      color: var(--secondary-color);
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      color: var(--dark-color);
+    }
+
+    .form-group input {
+      padding: 10px;
+      border: 1px solid var(--light-gray);
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .login-button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .login-button:hover {
+      opacity: 0.9;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Payment Proof Styles */
+    .payment-proof {
+      margin-top: 15px;
+      max-width: 100%;
+      border: 1px solid var(--light-gray);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .payment-proof:hover {
+      transform: scale(1.05);
+    }
+
+    .payment-proof-container {
+      margin-top: 10px;
+      position: relative;
+    }
+
+    .payment-proof-placeholder {
+      display: inline-block;
+      padding: 10px 15px;
+      background-color: var(--light-gray);
+      border-radius: 5px;
+      color: var(--gray-color);
+      font-size: 0.9rem;
+      border: 1px dashed var(--gray-color);
+      margin-top: 10px;
+    }
+
+    .verify-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    .verify-button:hover {
+      background-color: #45a049;
+    }
+
+    .verify-button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+
+    .verified-badge {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-left: 10px;
+      font-weight: 600;
+    }
+
+    .payment-verified-message {
+      display: inline-block;
+      background-color: #e8f5e8;
+      color: #2e7d32;
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      border: 1px solid #4caf50;
+      font-weight: 600;
+    }
+
+    .payment-unverified-message {
+      display: inline-block;
+      background-color: #ffebee;
+      color: #c62828;
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      border: 1px solid #ef5350;
+      font-weight: 600;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      position: relative;
+    }
+
+    .modal-content img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 5px;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .close-modal:hover {
+      opacity: 0.7;
+    }
+
+    .reservation-time {
+      background-color: #e3f2fd;
+      padding: 8px 12px;
+      border-radius: 5px;
+      margin-top: 10px;
+      border-left: 3px solid #2196F3;
+    }
+
+    .reservation-time strong {
+      color: #1976d2;
+    }
+
+    .customer-details {
+      background-color: #f3e5f5;
+      padding: 8px 12px;
+      border-radius: 5px;
+      margin-top: 10px;
+      border-left: 3px solid #9c27b0;
+    }
+
+    /* Admin Tabs */
+    .admin-tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .admin-tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .admin-tab.active {
+      border-bottom: 3px solid var(--primary-color);
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .admin-tab:hover:not(.active) {
+      border-bottom: 3px solid var(--light-gray);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Manage Menu Styles */
+    .menu-form {
+      background-color: var(--light-color);
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+
+    .menu-form h3 {
+      margin-bottom: 15px;
+      color: var(--secondary-color);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    .submit-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.9;
+    }
+
+    .menu-items-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+    }
+
+    .menu-item-card {
+      background-color: var(--body-color);
+      border-radius: 8px;
+      box-shadow: var(--box-shadow);
+      padding: 15px;
+      border-left: 3px solid var(--primary-color);
+      position: relative;
+    }
+
+    .menu-item-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .menu-item-name {
+      font-weight: 600;
+      color: var(--secondary-color);
+    }
+
+    .menu-item-type {
+      background-color: var(--light-gray);
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    .menu-item-price {
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    .menu-item-image {
+      max-width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .delete-item-btn {
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      margin-top: 10px;
+    }
+
+    /* Manage Promos Styles */
+    .promo-form {
+      background-color: var(--light-color);
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+
+    .promo-form h3 {
+      margin-bottom: 15px;
+      color: var(--secondary-color);
+    }
+
+    .promos-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .promo-card {
+      background-color: var(--body-color);
+      border-radius: 8px;
+      box-shadow: var(--box-shadow);
+      padding: 15px;
+      border-left: 3px solid var(--primary-color);
+    }
+
+    .promo-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .promo-title {
+      font-weight: 600;
+      color: var(--secondary-color);
+    }
+
+    .promo-date {
+      font-size: 0.8rem;
+      color: var(--gray-color);
+    }
+
+    .promo-description {
+      margin-bottom: 10px;
+    }
+
+    .promo-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .delete-promo-btn {
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      margin-top: 10px;
+    }
+
+    /* Animations */
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .pulse {
+      animation: pulse 0.6s ease-in-out;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .orders-container {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Login Section -->
+  <div id="loginSection" class="login-container">
+    <form id="loginForm" class="login-form">
+      <h2>Admin Login</h2>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit" class="login-button">Login</button>
+    </form>
+  </div>
+
+  <!-- Dashboard Section (hidden by default) -->
+  <div id="dashboardSection" class="container hidden">
+    <header>
+      <h1>Admin Dashboard</h1>
+      <div>
+        <button class="refresh-button" id="refreshButton">Refresh</button>
+        <button class="clear-button" id="clearButton">Clear Completed</button>
+        <button class="clear-button" id="uploadToFirestoreButton" style="background-color: #2196F3;">Upload to Firestore</button>
+        <button class="clear-button" id="logoutButton">Logout</button>
+      </div>
+    </header>
+
+    <!-- Admin Tabs -->
+    <div class="admin-tabs">
+      <div class="admin-tab active" data-tab="orders">Orders</div>
+      <div class="admin-tab" data-tab="menu">Manage Menu</div>
+      <div class="admin-tab" data-tab="promos">Manage Promos</div>
+    </div>
+
+    <!-- Orders Tab -->
+    <div id="ordersTab" class="tab-content active">
+      <div id="orders" class="orders-container">
+        <div class="loading">Loading orders...</div>
+      </div>
+    </div>
+
+    <!-- Manage Menu Tab -->
+    <div id="menuTab" class="tab-content">
+      <div class="menu-form">
+        <h3>Add New Menu Item</h3>
+        <form id="addMenuItemForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="itemName">Item Name</label>
+              <input type="text" id="itemName" name="itemName" required>
+            </div>
+            <div class="form-group">
+              <label for="itemType">Item Type</label>
+              <select id="itemType" name="itemType" required>
+                <option value="">Select Type</option>
+                <option value="Noodle">Noodle</option>
+                <option value="Rice">Rice</option>
+                <option value="Drink">Drink</option>
+                <option value="Add-On">Add-On</option>
+                <option value="Snack">Snack</option>
+                <option value="Bread">Bread & Toast</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="itemPrice">Price (RM)</label>
+              <input type="number" id="itemPrice" name="itemPrice" min="0" step="0.01" required>
+            </div>
+            <div class="form-group">
+              <label for="itemImage">Item Image</label>
+              <input type="file" id="itemImage" name="itemImage" accept=".jpg,.jpeg,.png">
+            </div>
+          </div>
+          <button type="submit" class="submit-btn">Add Menu Item</button>
+        </form>
+      </div>
+
+      <h3>Current Menu Items</h3><br>
+      <div id="menuItemsList" class="menu-items-list">
+        <div class="loading">Loading menu items...</div>
+      </div>
+    </div>
+
+    <!-- Manage Promos Tab -->
+    <div id="promosTab" class="tab-content">
+      <div class="promo-form">
+        <h3>Add New Promotion</h3>
+        <form id="addPromoForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="promoTitle">Title</label>
+              <input type="text" id="promoTitle" name="promoTitle" required>
+            </div>
+            <div class="form-group">
+              <label for="promoDate">Date</label>
+              <input type="date" id="promoDate" name="promoDate" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="promoDescription">Description</label>
+            <textarea id="promoDescription" name="promoDescription" rows="3" required></textarea><br>
+          </div>
+          <div class="form-group">
+            <label for="promoImage">Promotion Image</label>
+            <input type="file" id="promoImage" name="promoImage" accept=".jpg,.jpeg,.png" required><br>
+          </div>
+          <button type="submit" class="submit-btn">Add Promotion</button>
+        </form>
+      </div>
+
+      <h3>Current Promotions</h3><br>
+      <div id="promosList" class="promos-list">
+        <div class="loading">Loading promotions...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Proof Modal -->
+  <div id="paymentProofModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <img id="modalProofImage" src="" alt="Payment Proof">
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const API_BASE_URL = 'https://yftest.onrender.com';
+    const ADMIN_CREDENTIALS = {
+      username: "admin",
+      password: "admin12345!"
+    };
+
+    // Authentication Functions
+    function isLoggedIn() {
+      return sessionStorage.getItem('adminLoggedIn') === 'true';
+    }
+
+    function checkLoginStatus() {
+      if (isLoggedIn()) {
+        document.getElementById('loginSection').classList.add('hidden');
+        document.getElementById('dashboardSection').classList.remove('hidden');
+        fetchOrders();
+        fetchMenuItems();
+        fetchPromotions();
+      } else {
+        document.getElementById('loginSection').classList.remove('hidden');
+        document.getElementById('dashboardSection').classList.add('hidden');
+      }
+    }
+
+    function handleLogin(event) {
+      event.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+        sessionStorage.setItem('adminLoggedIn', 'true');
+        showNotification('Login successful');
+        checkLoginStatus();
+      } else {
+        showNotification('Invalid username or password', false);
+      }
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem('adminLoggedIn');
+      document.getElementById('loginForm').reset();
+      showNotification('Logged out successfully');
+      checkLoginStatus();
+    }
+
+    // Utility Functions
+    function showNotification(message, isSuccess = true) {
+      const notification = document.createElement('div');
+      notification.className = `notification ${isSuccess ? 'success' : 'error'}`;
+      notification.textContent = message;
+      document.body.appendChild(notification);
+
+      setTimeout(() => {
+        notification.remove();
+      }, 5000);
+    }
+
+    function getStatusClass(status) {
+      if (!status) return 'status-pending';
+
+      switch (status.toLowerCase()) {
+        case 'pending': return 'status-pending';
+        case 'preparing': return 'status-preparing';
+        case 'ready': return 'status-ready';
+        case 'completed': return 'status-completed';
+        default: return 'status-pending';
+      }
+    }
+
+    function formatItems(items) {
+      if (!Array.isArray(items)) return 'No items';
+
+      return items.map(item => {
+        const quantity = item.quantity || 1;
+        const price = item.price || 0;
+        return `${item.name} (x${quantity}) - RM${(price * quantity).toFixed(2)}`;
+      }).join('<br>') || 'No items in order';
+    }
+
+    function calculateTotal(items) {
+      if (!Array.isArray(items)) return 0;
+
+      return items.reduce((sum, item) => {
+        return sum + ((item.price || 0) * (item.quantity || 1));
+      }, 0);
+    }
+
+    function formatTimestamp(timestamp) {
+      if (!timestamp) return 'N/A';
+
+      // Try to parse the timestamp as ISO string or datetime-local format
+      const date = new Date(timestamp.includes('T') ? timestamp : timestamp.replace(' ', 'T'));
+
+      // Check if date is valid
+      if (isNaN(date.getTime())) return 'N/A';
+
+      return date.toLocaleString();
+    }
+
+    function formatReservationTime(reservationTime) {
+      if (!reservationTime) return null;
+
+      // Try to parse the timestamp as ISO string or datetime-local format
+      const date = new Date(reservationTime.includes('T') ? reservationTime : reservationTime.replace(' ', 'T'));
+
+      // Check if date is valid
+      if (isNaN(date.getTime())) return null;
+
+      const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+
+      return date.toLocaleDateString('en-US', options);
+    }
+
+    function checkImageExists(url) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = url;
+      });
+    }
+
+    // Tab Navigation
+    function setupAdminTabs() {
+      const tabs = document.querySelectorAll('.admin-tab');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function () {
+          // Remove active class from all tabs and contents
+          document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+          // Add active class to clicked tab
+          this.classList.add('active');
+
+          // Show corresponding content
+          const tabId = this.getAttribute('data-tab');
+          document.getElementById(`${tabId}Tab`).classList.add('active');
+        });
+      });
+    }
+
+    // API Functions
+    async function fetchOrders() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/orders`);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch orders');
+        }
+
+        const orders = await response.json();
+        renderOrders(orders);
+      } catch (err) {
+        console.error('Error fetching orders:', err);
+        document.getElementById('orders').innerHTML = '<div class="error-message">Unable to connect to server. Please check if the API is running.</div>';
+      }
+    }
+
+    async function fetchMenuItems() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/menu`);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch menu items');
+        }
+
+        const items = await response.json();
+        renderMenuItems(items);
+      } catch (err) {
+        console.error('Error fetching menu items:', err);
+        document.getElementById('menuItemsList').innerHTML = '<div class="error-message">Failed to load menu items</div>';
+      }
+    }
+
+    async function fetchPromotions() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/promotions`);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch promotions');
+        }
+
+        const promotions = await response.json();
+        renderPromotions(promotions);
+      } catch (err) {
+        console.error('Error fetching promotions:', err);
+        document.getElementById('promosList').innerHTML = '<div class="error-message">Failed to load promotions</div>';
+      }
+    }
+
+    async function renderOrders(orders) {
+      const ordersContainer = document.getElementById('orders');
+
+      if (!orders || orders.length === 0) {
+        ordersContainer.innerHTML = '<div class="no-orders">No orders found</div>';
+        return;
+      }
+
+      const ordersHTML = [];
+
+      for (const order of orders) {
+        const paymentProofUrl = order.paymentProofUrl;
+        const isVerified = order.verified;
+
+        let paymentProofSection = '';
+        if (paymentProofUrl) {
+          try {
+            const imageExists = await checkImageExists(paymentProofUrl);
+
+            if (imageExists) {
+              paymentProofSection = `
+                <div class="payment-proof-container">
+                  <img src="${paymentProofUrl}" 
+                       alt="Payment Proof" 
+                       class="payment-proof"
+                       onclick="showPaymentProof('${paymentProofUrl}')"
+                       style="max-width: 100px; max-height: 100px; object-fit: cover;">
+                  <br>
+                  <button class="verify-button" onclick="togglePaymentVerification(this, '${order.id}')">
+                    ${isVerified ? 'Payment Verified' : 'Verify Payment'}
+                  </button>
+                  ${isVerified ? `
+                    <div class="payment-verified-message">
+                      ✓ Payment Verified
+                    </div>
+                  ` : `
+                    <div class="payment-unverified-message">
+                      ✗ Payment Unverified
+                    </div>
+                  `}
+                </div>
+              `;
+            } else {
+              paymentProofSection = `
+                <div class="payment-proof-placeholder">
+                  📄 Payment proof submitted (unable to display)
+                  <br><a href="${paymentProofUrl}" target="_blank" rel="noopener noreferrer">View Image</a>
+                </div>
+                <button class="verify-button" onclick="togglePaymentVerification(this, '${order.id}')">
+                  ${isVerified ? 'Payment Verified' : 'Verify Payment'}
+                </button>
+                ${isVerified ? `
+                  <div class="payment-verified-message">
+                    ✓ Payment Verified
+                  </div>
+                ` : `
+                  <div class="payment-unverified-message">
+                    ✗ Payment Unverified
+                  </div>
+                `}
+              `;
+            }
+          } catch (err) {
+            console.error('Error checking image:', err);
+            paymentProofSection = `
+              <div class="payment-proof-placeholder">
+                📄 Payment proof submitted (unable to display)
+                <br><a href="${paymentProofUrl}" target="_blank" rel="noopener noreferrer">View Image</a>
+              </div>
+              <button class="verify-button" onclick="togglePaymentVerification(this, '${order.id}')">
+                ${isVerified ? 'Payment Verified' : 'Verify Payment'}
+              </button>
+              ${isVerified ? `
+                <div class="payment-verified-message">
+                  ✓ Payment Verified
+                </div>
+              ` : `
+                <div class="payment-unverified-message">
+                  ✗ Payment Unverified
+                </div>
+              `}
+            `;
+          }
+        } else {
+          paymentProofSection = `
+            <div class="payment-proof-placeholder">
+              ⚠️ No payment proof uploaded
+            </div>
+          `;
+        }
+
+        ordersHTML.push(`
+        <div class="order-card">
+            <div class="order-header">
+                <span class="customer-name">${order.customerName || 'Unknown Customer'}</span>
+            </div>
+            
+            <div class="order-info">
+                <div class="customer-details">
+                    <strong>Phone:</strong> ${order.phoneNumber || 'N/A'}<br>
+                    <strong>People:</strong> ${order.numberOfPeople || 1}
+                </div>
+                <br>
+                <div class="reservation-time">
+                    <strong>Reservation Time:</strong> ${formatTimestamp(order.timestamp)}
+                </div>
+                <br>
+                <div class="items-list">
+                    <strong>Items:</strong><br>
+                    ${formatItems(order.items)}
+                </div>
+                
+                <div class="order-total">
+                    <strong>Total: RM${calculateTotal(order.items).toFixed(2)}</strong>
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    <span class="status ${getStatusClass(order.status)}">${order.status || 'pending'}</span>
+                    ${order.verified ? '<span class="verified-badge">✓ Verified</span>' : ''}
+                </div>
+                
+                ${paymentProofSection}
+                
+                <div class="order-actions">
+                    <select onchange="updateOrderStatus('${order.id}', this.value)">
+                        <option value="">Change Status</option>
+                        <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+                        <option value="preparing" ${order.status === 'preparing' ? 'selected' : ''}>Preparing</option>
+                        <option value="ready" ${order.status === 'ready' ? 'selected' : ''}>Ready</option>
+                        <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Completed</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    `);
+      }
+
+      ordersContainer.innerHTML = ordersHTML.join('');
+    }
+
+    function renderMenuItems(items) {
+      const menuItemsList = document.getElementById('menuItemsList');
+
+      if (!items || items.length === 0) {
+        menuItemsList.innerHTML = '<div class="no-orders">No menu items found</div>';
+        return;
+      }
+
+      const itemsHTML = items.map(item => `
+        <div class="menu-item-card">
+          <div class="menu-item-header">
+            <div class="menu-item-name">${item.name}</div>
+            <div class="menu-item-type">${item.type}</div>
+          </div>
+          <div class="menu-item-price">RM${item.price.toFixed(2)}</div>
+          ${item.imageUrl ? `<img src="${item.imageUrl}" alt="${item.name}" class="menu-item-image">` : ''}
+          <button class="delete-item-btn" onclick="deleteMenuItem('${item.id}')">Delete</button>
+        </div>
+      `).join('');
+
+      menuItemsList.innerHTML = itemsHTML;
+    }
+
+    function renderPromotions(promotions) {
+      const promosList = document.getElementById('promosList');
+
+      if (!promotions || promotions.length === 0) {
+        promosList.innerHTML = '<div class="no-orders">No promotions found</div>';
+        return;
+      }
+
+      const promosHTML = promotions.map(promo => `
+        <div class="promo-card">
+          <div class="promo-header">
+            <div class="promo-title">${promo.title}</div>
+            <div class="promo-date">${promo.date}</div>
+          </div>
+          <div class="promo-description">${promo.description}</div>
+          ${promo.imageUrl ? `<img src="${promo.imageUrl}" alt="${promo.title}" class="promo-image">` : ''}
+          <button class="delete-promo-btn" onclick="deletePromotion('${promo.id}')">Delete</button>
+        </div>
+      `).join('');
+
+      promosList.innerHTML = promosHTML;
+    }
+
+    async function addMenuItem(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('itemName').value;
+      const type = document.getElementById('itemType').value;
+      const price = parseFloat(document.getElementById('itemPrice').value);
+      const imageFile = document.getElementById('itemImage').files[0];
+
+      if (!name || !type || isNaN(price)) {
+        showNotification('Please fill all required fields', false);
+        return;
+      }
+
+      try {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('type', type);
+        formData.append('price', price);
+        if (imageFile) {
+          formData.append('image', imageFile);
+        }
+
+        const response = await fetch(`${API_BASE_URL}/api/menu`, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to add menu item');
+        }
+
+        const newItem = await response.json();
+        showNotification('Menu item added successfully!');
+        document.getElementById('addMenuItemForm').reset();
+        fetchMenuItems();
+      } catch (err) {
+        showNotification('Failed to add menu item', false);
+        console.error('Error adding menu item:', err);
+      }
+    }
+
+    async function addPromotion(event) {
+      event.preventDefault();
+
+      const title = document.getElementById('promoTitle').value;
+      const description = document.getElementById('promoDescription').value;
+      const date = document.getElementById('promoDate').value;
+      const imageFile = document.getElementById('promoImage').files[0];
+
+      if (!title || !description || !date || !imageFile) {
+        showNotification('Please fill all required fields', false);
+        return;
+      }
+
+      try {
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('date', date);
+        formData.append('image', imageFile);
+
+        const response = await fetch(`${API_BASE_URL}/api/promotions`, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to add promotion');
+        }
+
+        const newPromo = await response.json();
+        showNotification('Promotion added successfully!');
+        document.getElementById('addPromoForm').reset();
+        fetchPromotions();
+      } catch (err) {
+        showNotification('Failed to add promotion', false);
+        console.error('Error adding promotion:', err);
+      }
+    }
+
+    async function deleteMenuItem(itemId) {
+      if (!confirm('Are you sure you want to delete this menu item?')) return;
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/menu/${itemId}`, {
+          method: 'DELETE'
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to delete menu item');
+        }
+
+        showNotification('Menu item deleted');
+        fetchMenuItems();
+      } catch (err) {
+        showNotification('Failed to delete menu item', false);
+        console.error('Error deleting menu item:', err);
+      }
+    }
+
+    async function deletePromotion(promoId) {
+      if (!confirm('Are you sure you want to delete this promotion?')) return;
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/promotions/${promoId}`, {
+          method: 'DELETE'
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to delete promotion');
+        }
+
+        showNotification('Promotion deleted');
+        fetchPromotions();
+      } catch (err) {
+        showNotification('Failed to delete promotion', false);
+        console.error('Error deleting promotion:', err);
+      }
+    }
+
+    async function updateOrderStatus(orderId, newStatus) {
+      if (!newStatus) return;
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}/status`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ status: newStatus })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update status');
+        }
+
+        fetchOrders();
+      } catch (err) {
+        showNotification(`Error: ${err.message}`, false);
+        console.error('Error updating status:', err);
+      }
+    }
+
+    async function clearCompletedOrders() {
+      if (!confirm('Are you sure you want to clear all completed orders?')) return;
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/orders/completed`, {
+          method: 'DELETE'
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to clear completed orders');
+        }
+
+        const result = await response.json();
+        showNotification(result.message || 'Completed orders cleared');
+        fetchOrders();
+      } catch (err) {
+        showNotification(`Error: ${err.message}`, false);
+        console.error('Error clearing orders:', err);
+      }
+    }
+
+    function togglePaymentVerification(button, orderId) {
+      const isCurrentlyVerified = button.textContent.includes('Verified');
+      const verifiedMessage = button.closest('.payment-proof-container').querySelector('.payment-verified-message');
+      const unverifiedMessage = button.closest('.payment-proof-container').querySelector('.payment-unverified-message');
+
+      if (isCurrentlyVerified) {
+        button.textContent = 'Verify Payment';
+        if (verifiedMessage) verifiedMessage.style.display = 'none';
+        if (unverifiedMessage) unverifiedMessage.style.display = 'inline-block';
+        showNotification('Payment marked as unverified');
+      } else {
+        button.textContent = 'Payment Verified';
+        if (verifiedMessage) verifiedMessage.style.display = 'inline-block';
+        if (unverifiedMessage) unverifiedMessage.style.display = 'none';
+        showNotification('Payment verified successfully');
+      }
+
+      // Add visual feedback
+      const orderCard = button.closest('.order-card');
+      if (orderCard) {
+        orderCard.classList.add('pulse');
+        setTimeout(() => {
+          orderCard.classList.remove('pulse');
+        }, 600);
+      }
+    }
+
+    // Modal Functions
+    function showPaymentProof(imageUrl) {
+      const modal = document.getElementById('paymentProofModal');
+      const modalImg = document.getElementById('modalProofImage');
+
+      modal.style.display = 'flex';
+      modalImg.src = imageUrl;
+
+      modalImg.onerror = function () {
+        closeModal();
+        showNotification('Payment proof image could not be loaded', false);
+      };
+    }
+
+    function closeModal() {
+      document.getElementById('paymentProofModal').style.display = 'none';
+    }
+
+    async function uploadCompletedToFirestore() {
+  if (!confirm('Are you sure you want to upload completed orders to Firestore?')) return;
+
+  try {
+    showNotification('Starting upload to Firestore...');
+    
+    const response = await fetch(`${API_BASE_URL}/api/upload-completed-orders`, {
+      method: 'POST'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to upload orders');
+    }
+
+    const result = await response.json();
+    showNotification(result.message || 'Orders uploaded to Firestore successfully!');
+    
+    if (result.errors && result.errors.length > 0) {
+      console.error('Upload errors:', result.errors);
+      showNotification(`${result.errors.length} orders failed to upload`, false);
+    }
+  } catch (err) {
+    showNotification(`Error: ${err.message}`, false);
+    console.error('Error uploading orders:', err);
+  }
+}
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      // Login form
+      document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+      // Dashboard buttons
+      document.getElementById('logoutButton').addEventListener('click', handleLogout);
+      document.getElementById('refreshButton').addEventListener('click', () => {
+        fetchOrders();
+        showNotification('Orders refreshed');
+      });
+      document.getElementById('clearButton').addEventListener('click', clearCompletedOrders);
+      document.getElementById('uploadToFirestoreButton').addEventListener('click', uploadCompletedToFirestore);
+      // Form submissions
+      document.getElementById('addMenuItemForm').addEventListener('submit', addMenuItem);
+      document.getElementById('addPromoForm').addEventListener('submit', addPromotion);
+
+      // Modal close events
+      document.querySelector('.close-modal').addEventListener('click', closeModal);
+      document.getElementById('paymentProofModal').addEventListener('click', function (e) {
+        if (e.target === this) {
+          closeModal();
+        }
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          closeModal();
+        }
+      });
+
+      // Setup admin tabs
+      setupAdminTabs();
+
+      // Initialize
+      checkLoginStatus();
+
+      // Auto-refresh every 30 seconds if logged in
+      setInterval(() => {
+        if (isLoggedIn()) {
+          fetchOrders();
+          fetchPromotions();
+        }
+      }, 30000);
+    });
+
+    // Make functions available globally
+    window.showPaymentProof = showPaymentProof;
+    window.closeModal = closeModal;
+    window.togglePaymentVerification = togglePaymentVerification;
+    window.updateOrderStatus = updateOrderStatus;
+    window.deleteMenuItem = deleteMenuItem;
+    window.deletePromotion = deletePromotion;
+  </script>
+</body>
+
+</html>

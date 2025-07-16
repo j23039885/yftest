@@ -1,0 +1,48 @@
+//  SQLite database
+const db = new sqlite3.Database("./orders.db");
+
+//  Init tables
+db.serialize(() => {
+  db.run(`
+    CREATE TABLE IF NOT EXISTS orders (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      customerName TEXT NOT NULL,
+      phoneNumber TEXT NOT NULL,
+      numberOfPeople INTEGER DEFAULT 1,
+      items TEXT NOT NULL,
+      status TEXT DEFAULT 'pending',
+      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+      paymentProof TEXT,
+      verified BOOLEAN DEFAULT 0
+    )
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS promotions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      description TEXT NOT NULL,
+      imagePath TEXT NOT NULL,
+      date TEXT NOT NULL,
+      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS menu (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      type TEXT NOT NULL,
+      price REAL NOT NULL,
+      imagePath TEXT,
+      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+});
+
+
+
+--Explaination--
+The SQL above can be found in server.js. The sql generates a session-based database and store data from both main website, and admin dashboard.
+This make the process easier to handle. The server.js has a function that allows admin dashboard to upload the "Complete" order to firebase's database.
+
