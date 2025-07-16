@@ -1,465 +1,472 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Menu - Yuan Fong Restaurant</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
     <style>
-        :root {
-            --primary-color: #b98d4b;
-            --secondary-color: #8b0000;
-            --light-color: #f8f4e9;
-            --dark-color: #333;
-            --gray-color: #666;
-            --light-gray: #eee;
-            --body-color: #fff;
-            --transition: all 0.3s ease;
-            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
+      :root {
+        --primary-color: #b98d4b;
+        --secondary-color: #8b0000;
+        --light-color: #f8f4e9;
+        --dark-color: #333;
+        --gray-color: #666;
+        --light-gray: #eee;
+        --body-color: #fff;
+        --transition: all 0.3s ease;
+        --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
 
-        .menu {
-            background-color: var(--light-color);
-            color: var(--dark-color);
-            line-height: 1.6;
-            padding: 40px 0;
-        }
+      .menu {
+        background-color: var(--light-color);
+        color: var(--dark-color);
+        line-height: 1.6;
+        padding: 40px 0;
+      }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
 
-        .menu-section {
-            margin-bottom: 50px;
-        }
+      .menu-section {
+        margin-bottom: 50px;
+      }
 
-        .menu-section h3 {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
-            margin-bottom: 25px;
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+      .menu-section h3 {
+        color: var(--primary-color);
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 10px;
+        margin-bottom: 25px;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
 
-        .menu-items {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
+      .menu-items {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
 
-        .menu-item {
-            background: transparent;
-            border-radius: 10px;
-            overflow: hidden;
-            /* box-shadow: var(--box-shadow);
+      .menu-item {
+        background: transparent;
+        border-radius: 10px;
+        overflow: hidden;
+        /* box-shadow: var(--box-shadow);
             transition: var(--transition);
             border: 1px solid rgba(0, 0, 0, 0.1); */
-        }
+      }
 
-        .menu-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
+      .menu-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      }
 
-        .item-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-bottom: 1px solid var(--light-gray);
-        }
+      .item-img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-bottom: 1px solid var(--light-gray);
+        border-radius: 8px 8px 0 0;
+      }
 
-        .item-info {
-            padding: 15px;
-        }
 
-        .item-name {
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 1.1rem;
-            color: var(--dark-color);
-        }
+      .item-info {
+        padding: 15px;
+      }
 
-        .item-price {
-            color: var(--primary-color);
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-        }
+      .item-name {
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+        color: var(--dark-color);
+      }
 
-        .cart-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
-        }
+      .item-price {
+        color: var(--primary-color);
+        font-weight: bold;
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
 
-        .quantity-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
+      .cart-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 15px;
+      }
 
-        .quantity-controls button {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
+      .quantity-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
 
-        .quantity-controls button:hover {
-            background: var(--secondary-color);
-        }
+      .quantity-controls button {
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+      }
 
-        .quantity {
-            min-width: 20px;
-            text-align: center;
-            font-weight: 600;
-        }
+      .quantity-controls button:hover {
+        background: var(--secondary-color);
+      }
 
-        .add-to-cart {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 100%;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+      .quantity {
+        min-width: 20px;
+        text-align: center;
+        font-weight: 600;
+      }
 
-        .add-to-cart:hover {
-            background: var(--secondary-color);
-        }
+      .add-to-cart {
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: var(--transition);
+        width: 100%;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
 
-        .page-banner {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('banner-bg.jpg') center/cover;
-            color: white;
-            text-align: center;
-            padding: 100px 0;
-        }
+      .add-to-cart:hover {
+        background: var(--secondary-color);
+      }
 
-        .page-banner h1 {
-            font-size: 3rem;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+      .page-banner {
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+          url("banner-bg.jpg") center/cover;
+        color: white;
+        text-align: center;
+        padding: 100px 0;
+      }
 
-        .noodle-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
+      .page-banner h1 {
+        font-size: 3rem;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
 
-        .noodle-option {
-            background: var(--light-gray);
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: var(--transition);
-            border: 1px solid var(--light-gray);
-        }
+      .noodle-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
 
-        .noodle-option:hover {
-            background: var(--primary-color);
-            color: white;
-        }
+      .noodle-option {
+        background: var(--light-gray);
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: var(--transition);
+        border: 1px solid var(--light-gray);
+      }
 
-        .noodle-option.selected {
-            background: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
+      .noodle-option:hover {
+        background: var(--primary-color);
+        color: white;
+      }
 
-        .soup-notice {
-            background: rgba(185, 141, 75, 0.1);
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 25px;
-            border-left: 4px solid var(--primary-color);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+      .noodle-option.selected {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
 
-        .drink-options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
+      .soup-notice {
+        background: rgba(185, 141, 75, 0.1);
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 25px;
+        border-left: 4px solid var(--primary-color);
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
 
-        .drink-option {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px dashed var(--light-gray);
-        }
+      .drink-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 15px;
+      }
 
-        .drink-type {
-            font-weight: 600;
-            min-width: 50px;
-        }
+      .drink-option {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px dashed var(--light-gray);
+      }
 
-        .drink-price {
-            color: var(--primary-color);
-            font-weight: bold;
-            min-width: 80px;
-            text-align: right;
-            margin-right: 10px;
-        }
+      .drink-type {
+        font-weight: 600;
+        min-width: 50px;
+      }
 
-        /* Cart icon styles */
-        .cart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+      .drink-price {
+        color: var(--primary-color);
+        font-weight: bold;
+        min-width: 80px;
+        text-align: right;
+        margin-right: 10px;
+      }
 
-        .cart-icon {
-            position: relative;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: var(--primary-color);
-        }
+      /* Cart icon styles */
+      .cart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
 
-        .cart-count {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background: var(--secondary-color);
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-        }
+      .cart-icon,
+      .section-cart-icon {
+        position: relative;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--primary-color);
+      }
 
-        /* Success message styles */
-        .success-message {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--primary-color);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 4px;
-            box-shadow: var(--box-shadow);
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
+      .cart-count,
+      .section-cart-count {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background: var(--secondary-color);
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+      }
 
-        .success-message.show {
-            opacity: 1;
-        }
+      /* Success message styles */
+      .success-message {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 4px;
+        box-shadow: var(--box-shadow);
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
 
-        /* Cart modal styles */
-        .cart-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
+      .success-message.show {
+        opacity: 1;
+      }
 
-        .cart-content {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 500px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
+      /* Cart modal styles */
+      .cart-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
 
-        .cart-title {
-            color: var(--primary-color);
-            border-bottom: 1px solid var(--light-gray);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
+      .cart-content {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 500px;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
 
-        .cart-items {
-            margin-bottom: 20px;
-        }
+      .cart-title {
+        color: var(--primary-color);
+        border-bottom: 1px solid var(--light-gray);
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+      }
 
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px dashed var(--light-gray);
-        }
+      .cart-items {
+        margin-bottom: 20px;
+      }
 
-        .cart-item-name {
-            flex: 2;
-        }
+      .cart-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px dashed var(--light-gray);
+      }
 
-        .cart-item-quantity {
-            flex: 1;
-            text-align: center;
-        }
+      .cart-item-name {
+        flex: 2;
+      }
 
-        .cart-item-price {
-            flex: 1;
-            text-align: right;
-        }
+      .cart-item-quantity {
+        flex: 1;
+        text-align: center;
+      }
 
-        .cart-total {
-            font-weight: bold;
-            text-align: right;
-            margin-top: 20px;
-            padding-top: 10px;
-            border-top: 2px solid var(--primary-color);
-        }
+      .cart-item-price {
+        flex: 1;
+        text-align: right;
+      }
 
-        .cart-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 20px;
-        }
+      .cart-total {
+        font-weight: bold;
+        text-align: right;
+        margin-top: 20px;
+        padding-top: 10px;
+        border-top: 2px solid var(--primary-color);
+      }
 
-        .cart-btn {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
+      .cart-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+      }
 
-        .close-cart {
-            background: var(--light-gray);
-        }
+      .cart-btn {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: var(--transition);
+      }
 
-        /* Checkout Modal Styles */
-        .checkout-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1001;
-            justify-content: center;
-            align-items: center;
-        }
+      .close-cart {
+        background: var(--light-gray);
+      }
 
-        .checkout-content {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
+      /* Checkout Modal Styles */
+      .checkout-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1001;
+        justify-content: center;
+        align-items: center;
+      }
 
-        .checkout-title {
-            color: var(--primary-color);
-            border-bottom: 1px solid var(--light-gray);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
+      .checkout-content {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 500px;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
+      .checkout-title {
+        color: var(--primary-color);
+        border-bottom: 1px solid var(--light-gray);
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+      }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
+      .form-group {
+        margin-bottom: 15px;
+      }
 
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--light-gray);
-            border-radius: 4px;
-            font-size: 1rem;
-        }
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+      }
 
-        .payment-qr {
-            text-align: center;
-            margin: 20px 0;
-            padding: 15px;
-            background-color: var(--light-color);
-            border-radius: 5px;
-            justify-content: center;
-        }
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--light-gray);
+        border-radius: 4px;
+        font-size: 1rem;
+      }
 
-        .payment-qr h4 {
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
+      .payment-qr {
+        text-align: center;
+        margin: 20px 0;
+        padding: 15px;
+        background-color: var(--light-color);
+        border-radius: 5px;
+        justify-content: center;
+      }
 
-        .checkout-actions {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
+      .payment-qr h4 {
+        margin-bottom: 10px;
+        color: var(--primary-color);
+      }
 
-        .checkout-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-        }
+      .checkout-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
 
-        .back-to-cart {
-            background: var(--light-gray);
-        }
+      .checkout-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: var(--transition);
+        font-weight: 600;
+      }
 
-        .confirm-order {
-            background: var(--primary-color);
-            color: white;
-        }
+      .back-to-cart {
+        background: var(--light-gray);
+      }
 
-        .checkout-btn:hover {
-            opacity: 0.9;
-        }
+      .confirm-order {
+        background: var(--primary-color);
+        color: white;
+      }
 
-        .cart-btn:hover {
-            opacity: 0.9;
-        }
+      .checkout-btn:hover {
+        opacity: 0.9;
+      }
 
-        /* Mobile Menu Toggle Styles
+      .cart-btn:hover {
+        opacity: 0.9;
+      }
+
+      /* Mobile Menu Toggle Styles
         .menu-toggle {
             display: none;
             cursor: pointer;
@@ -506,1459 +513,630 @@
             }
         } */
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <div class="logo-container">
-            <img src="YuanFong.png" alt="Yuan Fong Restaurant Logo" class="logo" style="width: 125px; height: 100px;">
+      <div class="logo-container">
+        <img
+          src="YuanFong.png"
+          alt="Yuan Fong Restaurant Logo"
+          class="logo"
+          style="width: 125px; height: 100px"
+        />
+      </div>
+      <nav id="navbar">
+        <div class="menu-toggle" id="menu-toggle">
+          <i class="fas fa-bars"></i>
         </div>
-        <nav id="navbar">
-            <div class="menu-toggle" id="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="menu.html" class="active">Menu</a></li>
-                <li><a href="blog.html">News & Promotions</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-            </ul>
-        </nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html" class="active">Menu</a></li>
+          <li><a href="blog.html">News & Promotions</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
     </header>
 
     <section class="page-banner">
-        <div class="container">
-            <h1>Our Menu</h1>
-        </div>
+      <div class="container">
+        <h1>Our Menu</h1>
+      </div>
     </section>
 
     <section class="menu">
-        <div class="container">
-            <!-- Success message element -->
-            <div class="success-message" id="successMessage">Successfully added to cart!</div>
+      <div class="container">
+        <!-- Success message element -->
+        <div class="success-message" id="successMessage">
+          Successfully added to cart!
+        </div>
 
-            <!-- Cart Modal -->
-            <div class="cart-modal" id="cartModal">
-                <div class="cart-content">
-                    <h3 class="cart-title">Your Cart</h3>
-                    <div class="cart-items" id="cartItems">
-                        <!-- Cart items will be inserted here -->
-                    </div>
-                    <div class="cart-total" id="cartTotal">
-                        Total: RM0.00
-                    </div>
-                    <div class="cart-actions">
-                        <button class="cart-btn close-cart" id="closeCart">Continue Shopping</button>
-                        <button class="cart-btn checkout">Checkout</button>
-                    </div>
-                </div>
+        <!-- Cart Modal -->
+        <div class="cart-modal" id="cartModal">
+          <div class="cart-content">
+            <h3 class="cart-title">Your Cart</h3>
+            <div class="cart-items" id="cartItems">
+              <!-- Cart items will be inserted here -->
             </div>
-
-            <!-- Add this modal right after the cart modal in menu.html -->
-            <div class="checkout-modal" id="checkoutModal">
-                <div class="checkout-content">
-                    <h3 class="checkout-title">Checkout</h3>
-                    <form id="checkoutForm">
-                        <div class="form-group">
-                            <label for="customerName">Name</label>
-                            <input type="text" id="customerName" name="customerName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phoneNumber">Phone Number</label>
-                            <input type="tel" id="phoneNumber" name="phoneNumber" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="reservationTime">Reservation Time</label>
-                            <input type="datetime-local" id="reservationTime" name="reservationTime" required
-                                min="2025-07-13T00:00">
-                        </div>
-                        <div class="form-group">
-                            <label for="numberOfPeople">Number of People</label>
-                            <input type="number" id="numberOfPeople" name="numberOfPeople" min="1" required>
-                        </div>
-                        <div class="payment-qr">
-                            <h4>Payment Information</h4>
-                            <img src="Extra/Payment.jpeg" alt="Payment QR Code" style="width: 100%; height: 100%;">
-                            <p>Please complete your payment before submitting the order</p>
-
-                            <div class="form-group">
-                                <label for="paymentProof">Upload Payment Screenshot</label>
-                                <input type="file" id="paymentProof" name="paymentProof" accept="image/*" required>
-                                <small>Upload a screenshot of your payment confirmation</small>
-                            </div>
-                        </div>
-                        <div class="checkout-actions">
-                            <button type="button" class="checkout-btn back-to-cart" id="backToCart">Back to
-                                Cart</button>
-                            <button type="submit" class="checkout-btn confirm-order">Confirm Order</button>
-                        </div>
-                    </form>
-                </div>
+            <div class="cart-total" id="cartTotal">Total: RM0.00</div>
+            <div class="cart-actions">
+              <button class="cart-btn close-cart" id="closeCart">
+                Continue Shopping
+              </button>
+              <button class="cart-btn checkout">Checkout</button>
             </div>
+          </div>
+        </div>
 
-            <!-- Noodle Section -->
-            <div class="menu-section">
-                <div class="cart-header">
-                    <h3>Noodle Dishes</h3>
-                    <div class="cart-icon" id="cartIcon">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count" id="cartCount">0</span>
-                    </div>
+        <!-- Add this modal right after the cart modal in menu.html -->
+        <div class="checkout-modal" id="checkoutModal">
+          <div class="checkout-content">
+            <h3 class="checkout-title">Checkout</h3>
+            <form id="checkoutForm">
+              <div class="form-group">
+                <label for="customerName">Name</label>
+                <input
+                  type="text"
+                  id="customerName"
+                  name="customerName"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input
+                  type="tel"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="reservationTime">Reservation Time</label>
+                <input
+                  type="datetime-local"
+                  id="reservationTime"
+                  name="reservationTime"
+                  required
+                  min="2025-07-13T00:00"
+                />
+              </div>
+              <div class="form-group">
+                <label for="numberOfPeople">Number of People</label>
+                <input
+                  type="number"
+                  id="numberOfPeople"
+                  name="numberOfPeople"
+                  min="1"
+                  required
+                />
+              </div>
+              <div class="payment-qr">
+                <h4>Payment Information</h4>
+                <img
+                  src="Extra/Payment.jpeg"
+                  alt="Payment QR Code"
+                  style="width: 100%; height: 100%"
+                />
+                <p>Please complete your payment before submitting the order</p>
+
+                <div class="form-group">
+                  <label for="paymentProof">Upload Payment Screenshot</label>
+                  <input
+                    type="file"
+                    id="paymentProof"
+                    name="paymentProof"
+                    accept="image/*"
+                    required
+                  />
+                  <small
+                    >Upload a screenshot of your payment confirmation</small
+                  >
                 </div>
+              </div>
+              <div class="checkout-actions">
+                <button
+                  type="button"
+                  class="checkout-btn back-to-cart"
+                  id="backToCart"
+                >
+                  Back to Cart
+                </button>
+                <button type="submit" class="checkout-btn confirm-order">
+                  Confirm Order
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
 
-                <div class="menu-items">
-                    <div class="menu-item">
-                        <img src="Noodles/N1.jpeg" alt="Fish Ball Noodles" class="item-img" style="width: 180px;">
-                        <div class="item-info">
-                            <div class="item-name">Fish Ball Noodles</div>
-                            <div class="item-price">RM11.90</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Noodles/N8.png" alt="Fish Ball Pork Slice Noodles" class="item-img"
-                            style="width: 180px;">
-                        <div class="item-info">
-                            <div class="item-name">Fish Ball Pork Slice Noodles</div>
-                            <div class="item-price">RM12.90</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Noodles/N7.png" alt="Fish Fillet" class="item-img" style="width: 180px;">
-                        <div class="item-info">
-                            <div class="item-name">Fish Fillet</div>
-                            <div class="item-price">RM16.90</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Noodles/N3.jpeg" alt="Seafood Noodles" class="item-img" style="width: 180px;">
-                        <div class="item-info">
-                            <div class="item-name">Seafood Noodles</div>
-                            <div class="item-price">RM16.90</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Noodles/N5.jpeg" alt="Dumplings Noodles" class="item-img" style="width: 180px;">
-                        <div class="item-info">
-                            <div class="item-name">Dumplings Noodles</div>
-                            <div class="item-price">RM13.90</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Noodles/N6.png" alt="Vegetable Soup Noodles" class="item-img" style="width: 180px;">
-                        <div class="item-info">
-                            <div class="item-name">Vegetable Soup Noodles</div>
-                            <div class="item-price">RM11.90</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-items">
-                        <div class="menu-item">
-                            <img src="https://i.guim.co.uk/img/static/sys-images/Guardian/About/General/2013/10/11/1381485111125/Pork-ball-noodles---speed-008.jpg?width=465&dpr=1&s=none&crop=none"
-                                alt="Pork Ball Noodles" class="item-img" style="width: 180px;">
-                            <div class="item-info">
-                                <div class="item-name">Pork Ball Noodles</div>
-                                <div class="item-price">RM12.90</div>
-                                <div class="cart-controls">
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                    <button class="add-to-cart">Add to Cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-items">
-                        <div class="menu-item">
-                            <img src="https://www.eatandtravelwithus.com/wp-content/uploads/2018/10/Boon-Lay-Feima-Minced-Meat-Fishball-Noodle-2.jpg"
-                                alt="Minced Pork Fish Ball" class="item-img" style="width: 180px;">
-                            <div class="item-info">
-                                <div class="item-name">Minced Pork Fish Ball</div>
-                                <div class="item-price">RM12.90</div>
-                                <div class="cart-controls">
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                    <button class="add-to-cart">Add to Cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-items">
-                        <div class="menu-item">
-                            <img src="https://cicili.tv/wp-content/uploads/2019/03/Pork-Belly-with-Vermicelli-1-scaled-1707x1707.jpg"
-                                alt="Pork Belly Noodles" class="item-img" style="width: 180px;">
-                            <div class="item-info">
-                                <div class="item-name">Pork Belly Noodles</div>
-                                <div class="item-price">RM13.90</div>
-                                <div class="cart-controls">
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                    <button class="add-to-cart">Add to Cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Noodles Section -->
+        <div class="menu-section">
+          <div class="cart-header">
+            <h3>Noodles</h3>
+            <div class="cart-icon" id="cartIcon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="cart-count" id="cartCount">0</span>
             </div>
+          </div>
+          <div class="menu-items" id="noodlesContainer"></div>
+        </div>
 
-            <!-- Rice Section -->
-            <div class="menu-section">
-                <h3>Rice Dishes</h3>
-                <div class="menu-items">
-                    <div class="menu-item">
-                        <img src="Rice/R1.jpeg" alt="Pork Minced Rice" class="item-img" style="width:180px;">
-                        <div class="item-info">
-                            <div class="item-name">Pork Minced Rice</div>
-                            <div class="item-price">RM13.90</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Rice/R2.jpeg" alt="Braised Pork Rice" class="item-img" style="width:180px;">
-                        <div class="item-info">
-                            <div class="item-name">Braised Pork Rice</div>
-                            <div class="item-price">RM14.90</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Rice/R3.jpeg" alt="Soybean Paste Eggplant Rice" class="item-img" style="width:180px;">
-                        <div class="item-info">
-                            <div class="item-name">Soybean Paste Eggplant Rice</div>
-                            <div class="item-price">RM14.90</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Rice Section -->
+        <div class="menu-section">
+          <div class="cart-header">
+            <h3>Rice Dishes</h3>
+            <div class="section-cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="section-cart-count" id="sectionCartCount2">0</span>
             </div>
+          </div>
+          <div class="menu-items" id="riceContainer"></div>
+        </div>
 
-            <!-- Drinks Section -->
-            <div class="menu-section">
-                <h3>Drinks</h3>
-                <div class="menu-items">
-                    <div class="menu-item">
-                        <img src="Drinks/D2.png" alt="Kopi" class="item-img" style="width: 110px; height: 210px;">
-                        <div class="item-info">
-                            <div class="item-name">Kopi</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Hot</span>
-                                    <span class="drink-price">RM3.00</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM4.00</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Drinks/D9.jpeg" alt="Lemonade" class="item-img" style="width: 110px; height: 210px;">
-                        <div class="item-info">
-                            <div class="item-name">Lemonade</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Hot</span>
-                                    <span class="drink-price">RM3.00</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM4.00</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Drinks/D7.png" alt="Milo" class="item-img" style="width: 110px; height: 210px;">
-                        <div class="item-info">
-                            <div class="item-name">Milo</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Hot</span>
-                                    <span class="drink-price">RM3.80</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM5.40</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Drinks/D8.png" alt="Lemon Tea" class="item-img" style="width: 150px; height: 210px;">
-                        <div class="item-info">
-                            <div class="item-name">Lemon Tea</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Hot</span>
-                                    <span class="drink-price">RM3.40</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM4.60</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Drinks/D4.jpeg" alt="Nescafe" class="item-img" style="width: 110px; height: 210px;">
-                        <div class="item-info">
-                            <div class="item-name">Nescafe</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Hot</span>
-                                    <span class="drink-price">RM3.80</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM5.40</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Drinks/D3.jpeg" alt="Three Layer Tea" class="item-img"
-                            style="width: 110px; height: 210px;">
-                        <div class="item-info">
-                            <div class="item-name">Three Layer Tea</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM5.40</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Drinks/D10.png"
-                            alt="100 Plus" class="item-img" style="width: 100px; height: 200px;">
-                        <div class="item-info">
-                            <div class="item-name">100% Plus</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM3.40</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Drinks/D11.png"
-                            alt="Mineral Water" class="item-img" style="width: 100px; height: 210px;">
-                        <div class="item-info">
-                            <div class="item-name">Mineral Water</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM1.50</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Drinks/D12.png" alt="Kopi O"
-                            class="item-img" style="width: 110px; height: 170px;">
-                        <div class="item-info">
-                            <div class="item-name">Kopi O</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Hot</span>
-                                    <span class="drink-price">RM3.00</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM4.00</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="https://www.alliancecoffee.net/wp-content/uploads/2020/05/kopi-c-in-glass-cup.jpg"
-                            alt="Kopi C" class="item-img" style="width: 110px; height: 170px;">
-                        <div class="item-info">
-                            <div class="item-name">Kopi C</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Hot</span>
-                                    <span class="drink-price">RM3.40</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM4.60</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="https://gengmelayu.wordpress.com/wp-content/uploads/2016/03/teh-o1.jpg?w=640"
-                            alt="Teh O" class="item-img" style="width: 110px; height: 170px;">
-                        <div class="item-info">
-                            <div class="item-name">Teh O</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Hot</span>
-                                    <span class="drink-price">RM3.00</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM4.00</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="https://bohtea.com/wp-content/uploads/2022/08/teh-tarik-foam-e1658084487234-1.png"
-                            alt="Teh" class="item-img" style="width: 110px; height: 170px;">
-                        <div class="item-info">
-                            <div class="item-name">Teh</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Hot</span>
-                                    <span class="drink-price">RM3.40</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM4.60</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="https://chindamani.sg/image/cache/catalog/Products/17_/Teh%20C%20Halia%20Kosong-800x800.jpg"
-                            alt="Teh C" class="item-img" style="width: 110px; height: 170px;">
-                        <div class="item-info">
-                            <div class="item-name">Teh C</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Hot</span>
-                                    <span class="drink-price">RM3.40</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM4.60</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAW5-jgJPgv2OfZ0l_1aAByfkrsXUDnebOkA&s"
-                            alt="Cham O" class="item-img" style="width: 110px; height: 170px;">
-                        <div class="item-info">
-                            <div class="item-name">Cham O</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Hot</span>
-                                    <span class="drink-price">RM3.00</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM4.00</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="https://meetarik.com.my/wp-content/uploads/2024/12/Classic-Cham-1.webp" alt="Cham"
-                            class="item-img" style="width: 110px; height: 170px;">
-                        <div class="item-info">
-                            <div class="item-name">Cham</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Hot</span>
-                                    <span class="drink-price">RM3.40</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM4.60</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Drinks/D13.png"
-                            alt="Cham C" class="item-img" style="width: 110px; height: 140px;">
-                        <div class="item-info">
-                            <div class="item-name">Cham C</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Hot</span>
-                                    <span class="drink-price">RM3.40</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM4.60</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="https://seaworldcafe.com/image/cache/catalog/products/images%20(12)-800x800.jpg"
-                            alt="Neslo" class="item-img" style="width: 110px; height: 170px;">
-                        <div class="item-info">
-                            <div class="item-name">Neslo</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Hot</span>
-                                    <span class="drink-price">RM4.60</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM6.20</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <!-- <div class="menu-item">
-                        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.mycs.com.my%2Fcoca-cola-can-drink-320ml-9555589200385&psig=AOvVaw2KEDJhOvH6ql1JOei5SeJz&ust=1751092322704000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJi0prH9kI4DFQAAAAAdAAAAABAK"
-                            alt="Coco Cola" class="item-img" style="width: 100px; height: 210px;">
-                        <div class="item-info">
-                            <div class="item-name">Coco Cola</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM3.40</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div> -->
-
-                    <div class="menu-item">
-                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh5-3hrzBynqn2rl5d4y4IbxxmTtapPVJ8E3XJhBF_Jq3_CxBElkhT-csMoaVmfu1wu938f_46GejdoKij0tC0D5_lVtsh2iEH8MyrKSvbERRiWfrIW7zEf6xdOQTsbhu7BRVa3T0lKjkhvfzsXyziw-CdbM-3qjQac7LXSm1SxB_LiFR-KUvP34wg6Hyc/s3072/HKS.jpg"
-                            alt="Hor Ka Sai (Milo + Kopi)" class="item-img" style="width: 110px; height: 170px;">
-                        <div class="item-info">
-                            <div class="item-name">Hor Ka Sai (Milo + Kopi)</div>
-                            <div class="drink-options">
-                                <div class="drink-option">
-                                    <span class="drink-type">Hot</span>
-                                    <span class="drink-price">RM4.60</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                                <div class="drink-option">
-                                    <span class="drink-type">Cold</span>
-                                    <span class="drink-price">RM6.20</span>
-                                    <div class="quantity-controls">
-                                        <button class="decrease">-</button>
-                                        <span class="quantity">0</span>
-                                        <button class="increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-to-cart" disabled>Add to Cart</button>
-                        </div>
-                    </div>
-
-                </div>
+        <!-- Unified Drinks Section -->
+        <div class="menu-section">
+          <div class="cart-header">
+            <h3>Drinks</h3>
+            <div class="section-cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="section-cart-count" id="sectionCartCount3">0</span>
             </div>
+          </div>
+          <div class="menu-items" id="drinksContainer"></div>
+        </div>
 
-
-            <!-- Snacks Section -->
-            <div class="menu-section">
-                <h3>Snacks</h3>
-                <div class="menu-items">
-                    <div class="menu-item">
-                        <img src="Snacks/S1.jpeg" alt="Fish Ball Soup" class="item-img"
-                            style="width: 210px; height: 200px;">
-                        <div class="item-info">
-                            <div class="item-name">Fish Ball Soup (5pcs)</div>
-                            <div class="item-price">RM6.00</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Snacks/S2.png" alt="Wonton" class="item-img" style="width: 210px; height: 200px;">
-                        <div class="item-info">
-                            <div class="item-name">Wonton (6pcs)</div>
-                            <div class="item-price">RM6.00</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="https://imagedelivery.net/9lr8zq_Jvl7h6OFWqEi9IA/3fff1c11-886a-47c3-473d-268d2bf54f00/public"
-                            alt="Dumplings (3pcs)" class="item-img" style="width: 210px; height: 200px;">
-                        <div class="item-info">
-                            <div class="item-name">Dumplings (3pcs)</div>
-                            <div class="item-price">RM6.00</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Snacks Section -->
+        <div class="menu-section">
+          <div class="cart-header">
+            <h3>Snacks</h3>
+            <div class="section-cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="section-cart-count" id="sectionCartCount4">0</span>
             </div>
+          </div>
+          <div class="menu-items" id="snacksContainer"></div>
+        </div>
 
-            <!-- Bread Section -->
-            <div class="menu-section">
-                <h3>Bread & Toast</h3>
-                <div class="menu-items">
-                    <div class="menu-item">
-                        <img src="Bread/B5.jpeg" alt="Kaya Butter Toast" class="item-img"
-                            style="width: 210px; height: 200px;">
-                        <div class="item-info">
-                            <div class="item-name">Kaya Butter Toast</div>
-                            <div class="item-price">RM3.00</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Bread/B3.jpeg" alt="Croissant Kaya Butter" class="item-img"
-                            style="width: 210px; height: 200px;">
-                        <div class="item-info">
-                            <div class="item-name">Croissant Kaya Butter</div>
-                            <div class="item-price">RM6.80</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <img src="Bread/B1.jpeg" alt="Half Boiled Eggs" class="item-img"
-                            style="width: 210px; height: 200px;">
-                        <div class="item-info">
-                            <div class="item-name">Half Boiled Eggs</div>
-                            <div class="item-price">RM3.40</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Bread & Toast Section -->
+        <div class="menu-section">
+          <div class="cart-header">
+            <h3>Bread & Toast</h3>
+            <div class="section-cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="section-cart-count" id="sectionCartCount5">0</span>
             </div>
+          </div>
+          <div class="menu-items" id="breadContainer"></div>
+        </div>
 
-            <!-- Add Ons Section -->
-            <div class="menu-section">
-                <h3>Add Ons</h3>
-                <div class="menu-items">
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <div class="item-name">Egg</div>
-                            <div class="item-price">RM1.50</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <div class="item-name">Dumplings</div>
-                            <div class="item-price">RM4.00</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <div class="item-name">Pork Belly</div>
-                            <div class="item-price">RM5.00</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <div class="item-name">Pork Ball</div>
-                            <div class="item-price">RM2.40</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <div class="item-name">Enoki</div>
-                            <div class="item-price">RM2.50</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <div class="item-name">Fish Ball</div>
-                            <div class="item-price">RM2.40</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <div class="item-name">Pork Slice</div>
-                            <div class="item-price">RM4.00</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <div class="item-name">Vegetable</div>
-                            <div class="item-price">RM3.00</div>
-                            <div class="cart-controls">
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <span class="quantity">0</span>
-                                    <button class="increase">+</button>
-                                </div>
-                                <button class="add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Add-Ons Section -->
+        <div class="menu-section">
+          <div class="cart-header">
+            <h3>Add-Ons</h3>
+            <div class="section-cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="section-cart-count" id="sectionCartCount5">0</span>
             </div>
+          </div>
+          <div class="menu-items" id="addOnsContainer"></div>
         </div>
     </section>
 
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <img src="YuanFong.png" alt="Yuan Fong Restaurant Logo" class="footer-logo-img"
-                        style="width: 250px; height: 200px; margin-left: -40px;">
-                </div>
-                <div class="footer-links">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="menu.html">Menu</a></li>
-                        <li><a href="blog.html">News & Promotions</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="footer-contact">
-                    <h3>Contact Us</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> No.24, Jalan SS4D/14, Ss 4,
-                        <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 47301 Petaling Jaya, Selangor
-                    </p>
-                    <p><i class="fas fa-phone"></i> +60 12-515 0518</p>
-                    <p><i class="fas fa-envelope"></i> yuanfongss4@gmail.com</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Yuan Fong Restaurant. All Rights Reserved.</p>
-            </div>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-logo">
+            <img
+              src="YuanFong.png"
+              alt="Yuan Fong Restaurant Logo"
+              class="footer-logo-img"
+              style="width: 250px; height: 200px; margin-left: -40px"
+            />
+          </div>
+          <div class="footer-links">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="menu.html">Menu</a></li>
+              <li><a href="blog.html">News & Promotions</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h3>Contact Us</h3>
+            <p>
+              <i class="fas fa-map-marker-alt"></i> No.24, Jalan SS4D/14, Ss 4,
+              <br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 47301 Petaling Jaya, Selangor
+            </p>
+            <p><i class="fas fa-phone"></i> +60 12-515 0518</p>
+            <p><i class="fas fa-envelope"></i> yuanfongss4@gmail.com</p>
+          </div>
         </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Yuan Fong Restaurant. All Rights Reserved.</p>
+        </div>
+      </div>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', async function () {
-            // Cart functionality variables
-            const API_BASE_URL = 'https://yftest.onrender.com';
-            const cart = [];
-            const cartCount = document.getElementById('cartCount');
-            const cartIcon = document.getElementById('cartIcon');
-            const cartModal = document.getElementById('cartModal');
-            const closeCart = document.getElementById('closeCart');
-            const cartItems = document.getElementById('cartItems');
-            const cartTotal = document.getElementById('cartTotal');
-            const successMessage = document.getElementById('successMessage');
-            const checkoutModal = document.getElementById('checkoutModal');
-            const backToCart = document.getElementById('backToCart');
-            const checkoutForm = document.getElementById('checkoutForm');
-            const checkoutBtn = document.querySelector('.checkout');
+      document.addEventListener("DOMContentLoaded", async function () {
+        // Cart functionality variables
+        const API_BASE_URL = "https://yftest.onrender.com";
+        // const API_BASE_URL = "http://localhost:3000";
+        const cart = [];
+        const cartCount = document.getElementById("cartCount");
+        const cartIcon = document.getElementById("cartIcon");
+        const cartModal = document.getElementById("cartModal");
+        const closeCart = document.getElementById("closeCart");
+        const cartItems = document.getElementById("cartItems");
+        const cartTotal = document.getElementById("cartTotal");
+        const successMessage = document.getElementById("successMessage");
+        const checkoutModal = document.getElementById("checkoutModal");
+        const backToCart = document.getElementById("backToCart");
+        const checkoutForm = document.getElementById("checkoutForm");
+        const checkoutBtn = document.querySelector(".checkout");
+
+        // Show success message
+        function showSuccessMessage(text = "Successfully added to cart!") {
+          successMessage.textContent = text;
+          successMessage.classList.add("show");
+          setTimeout(() => {
+            successMessage.classList.remove("show");
+          }, 2000);
+        }
+
+        // Update cart count
+        function updateCartCount() {
+          const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+          cartCount.textContent = totalItems;
+          // Update all section cart counts
+          document.querySelectorAll(".section-cart-count").forEach((el) => {
+            el.textContent = totalItems;
+          });
+        }
+
+        // Update cart modal
+        function updateCartModal() {
+          cartItems.innerHTML = "";
+          let total = 0;
+
+          if (cart.length === 0) {
+            cartItems.innerHTML = "<p>Your cart is empty</p>";
+            cartTotal.textContent = "Total: RM0.00";
+            return;
+          }
+
+          cart.forEach((item, index) => {
+            const itemElement = document.createElement("div");
+            itemElement.className = "cart-item";
+
+            const itemName = document.createElement("div");
+            itemName.className = "cart-item-name";
+            itemName.textContent = item.name;
+
+            const itemQuantity = document.createElement("div");
+            itemQuantity.className = "cart-item-quantity";
+
+            // Add quantity controls
+            const quantityControls = document.createElement("div");
+            quantityControls.className = "quantity-controls";
+            quantityControls.style.justifyContent = "center";
+
+            const decreaseBtn = document.createElement("button");
+            decreaseBtn.className = "decrease";
+            decreaseBtn.textContent = "-";
+            decreaseBtn.dataset.index = index;
+
+            const quantitySpan = document.createElement("span");
+            quantitySpan.className = "quantity";
+            quantitySpan.textContent = item.quantity;
+
+            const increaseBtn = document.createElement("button");
+            increaseBtn.className = "increase";
+            increaseBtn.textContent = "+";
+            increaseBtn.dataset.index = index;
+
+            quantityControls.appendChild(decreaseBtn);
+            quantityControls.appendChild(quantitySpan);
+            quantityControls.appendChild(increaseBtn);
+
+            itemQuantity.appendChild(quantityControls);
+
+            const itemPrice = document.createElement("div");
+            itemPrice.className = "cart-item-price";
+            itemPrice.innerHTML = `RM${(item.price * item.quantity).toFixed(2)}&nbsp;&nbsp;`;
+
+            const removeBtn = document.createElement("button");
+            removeBtn.className = "remove-item";
+            removeBtn.innerHTML = '<i class="fas fa-trash"></i>';
+            removeBtn.dataset.index = index;
+
+            itemElement.appendChild(itemName);
+            itemElement.appendChild(itemQuantity);
+            itemElement.appendChild(itemPrice);
+            itemElement.appendChild(removeBtn);
+
+            cartItems.appendChild(itemElement);
+
+            total += item.price * item.quantity;
+          });
+
+          cartTotal.textContent = `Total: RM${total.toFixed(2)}`;
+        }
+
+        // Event delegation for quantity controls
+        document.addEventListener("click", function (e) {
+          // Handle increase buttons
+          if (e.target.classList.contains("increase")) {
+            if (e.target.dataset.index !== undefined) {
+              // Handle cart quantity increase
+              const index = parseInt(e.target.dataset.index);
+              cart[index].quantity += 1;
+              updateCartModal();
+              updateCartCount();
+            } else {
+              // Handle menu item quantity increase
+              const quantityElement =
+                e.target.parentElement.querySelector(".quantity");
+              let quantity = parseInt(quantityElement.textContent);
+              quantityElement.textContent = quantity + 1;
+
+              // Update selection state
+              const menuItem = e.target.closest(".menu-item");
+              if (menuItem && !menuItem.querySelector(".drink-options")) {
+                menuItem.classList.add("selected");
+              }
+
+              // Enable add to cart button for drinks
+              if (menuItem) {
+                const addToCartBtn = menuItem.querySelector(".add-to-cart");
+                if (addToCartBtn) {
+                  addToCartBtn.removeAttribute("disabled");
+                }
+              }
+            }
+          }
+          // Handle decrease buttons
+          else if (e.target.classList.contains("decrease")) {
+            if (e.target.dataset.index !== undefined) {
+              // Handle cart quantity decrease
+              const index = parseInt(e.target.dataset.index);
+              if (cart[index].quantity > 1) {
+                cart[index].quantity -= 1;
+                updateCartModal();
+                updateCartCount();
+              } else {
+                // Remove item if quantity reaches 0
+                cart.splice(index, 1);
+                updateCartModal();
+                updateCartCount();
+              }
+            } else {
+              // Handle menu item quantity decrease
+              const quantityElement =
+                e.target.parentElement.querySelector(".quantity");
+              let quantity = parseInt(quantityElement.textContent);
+              if (quantity > 0) {
+                quantityElement.textContent = quantity - 1;
+
+                // Update selection state if quantity reaches 0
+                if (quantity - 1 === 0) {
+                  const menuItem = e.target.closest(".menu-item");
+                  if (menuItem && !menuItem.querySelector(".drink-options")) {
+                    menuItem.classList.remove("selected");
+                  }
+                }
+              }
+            }
+          }
+          // Handle remove item buttons
+          else if (
+            e.target.classList.contains("remove-item") ||
+            e.target.closest(".remove-item")
+          ) {
+            const btn = e.target.classList.contains("remove-item")
+              ? e.target
+              : e.target.closest(".remove-item");
+            const index = parseInt(btn.dataset.index);
+            cart.splice(index, 1);
+            updateCartModal();
+            updateCartCount();
+          }
+        });
+
+        // Add to cart functionality
+        document.addEventListener("click", function (e) {
+          if (e.target.classList.contains("add-to-cart")) {
+            const item = e.target.closest(".menu-item");
+            const itemName = item.querySelector(".item-name").textContent;
+            let itemsAdded = 0;
+
+            // Check if this is a drink item
+            const isDrink = item.querySelector(".drink-options") !== null;
+
+            if (isDrink) {
+              // Handle drink items
+              const drinkOptions = item.querySelectorAll(".drink-option");
+              drinkOptions.forEach((option) => {
+                const quantity = parseInt(
+                  option.querySelector(".quantity").textContent
+                );
+                if (quantity > 0) {
+                  const type = option.querySelector(".drink-type").textContent;
+                  const priceText =
+                    option.querySelector(".drink-price").textContent;
+                  const price = parseFloat(priceText.replace("RM", ""));
+
+                  // Add to cart
+                  cart.push({
+                    name: `${itemName} (${type})`,
+                    price: price,
+                    quantity: quantity,
+                  });
+
+                  // Reset quantity
+                  option.querySelector(".quantity").textContent = "0";
+                  itemsAdded++;
+                }
+              });
+
+              if (itemsAdded === 0) {
+                alert("Please select at least 1 quantity for the drink");
+                return;
+              }
+            } else {
+              // Handle regular food items
+              const quantity = parseInt(
+                item.querySelector(".quantity").textContent
+              );
+              if (quantity > 0) {
+                const priceText = item.querySelector(".item-price").textContent;
+                const priceMatch = priceText.match(/RM(\d+\.\d{2})/);
+
+                if (!priceMatch) {
+                  alert("Could not determine price for this item");
+                  return;
+                }
+
+                const price = parseFloat(priceMatch[1]);
+
+                // Check if item already exists in cart
+                const existingItem = cart.find(
+                  (i) => i.name === itemName && i.price === price
+                );
+
+                if (existingItem) {
+                  existingItem.quantity += quantity;
+                } else {
+                  cart.push({
+                    name: itemName,
+                    price: price,
+                    quantity: quantity,
+                  });
+                }
+
+                // Reset quantity and selection
+                item.querySelector(".quantity").textContent = "0";
+                item.classList.remove("selected");
+                itemsAdded++;
+              } else {
+                alert("Please select at least 1 quantity");
+                return;
+              }
+            }
+
+            if (itemsAdded > 0) {
+              updateCartCount();
+              showSuccessMessage();
+            }
+          }
+        });
+
+        // Cart modal functionality
+        cartIcon.addEventListener("click", function () {
+          updateCartModal();
+          cartModal.style.display = "flex";
+        });
+
+        // Initialize section cart icons
+        document.querySelectorAll(".section-cart-icon").forEach((icon) => {
+          icon.addEventListener("click", function () {
+            updateCartModal();
+            cartModal.style.display = "flex";
+          });
+        });
+
+        closeCart.addEventListener("click", function () {
+          cartModal.style.display = "none";
+        });
+
+        cartModal.addEventListener("click", function (e) {
+          if (e.target === cartModal) {
+            cartModal.style.display = "none";
+          }
+        });
+
+        // Checkout functionality
+        checkoutBtn.addEventListener("click", function () {
+          if (cart.length === 0) {
+            alert("Your cart is empty");
+            return;
+          }
+          cartModal.style.display = "none";
+          checkoutModal.style.display = "flex";
+        });
+
+        backToCart.addEventListener("click", function () {
+          checkoutModal.style.display = "none";
+          cartModal.style.display = "flex";
+        });
+
+        checkoutModal.addEventListener("click", function (e) {
+          if (e.target === checkoutModal) {
+            checkoutModal.style.display = "none";
+          }
+        });
+
+        checkoutForm.addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const customerName = document
+            .getElementById("customerName")
+            .value.trim();
+          const phoneNumber = document
+            .getElementById("phoneNumber")
+            .value.trim();
+          const numberOfPeople = parseInt(
+            document.getElementById("numberOfPeople").value
+          );
+          const paymentProof = document.getElementById("paymentProof").files[0];
+          const reservationTime =
+            document.getElementById("reservationTime").value;
+
+          if (!reservationTime) {
+            alert("Please select a reservation time");
+            return;
+          }
+
+          if (
+            !customerName ||
+            !phoneNumber ||
+            isNaN(numberOfPeople) ||
+            numberOfPeople < 1 ||
+            !paymentProof
+          ) {
+            alert(
+              "Please fill in all fields correctly and upload payment proof"
+            );
+            return;
+          }
+
+          try {
+            const formData = new FormData();
+            formData.append("customerName", customerName);
+            formData.append("phoneNumber", phoneNumber);
+            formData.append("numberOfPeople", numberOfPeople);
+            formData.append("reservationTime", reservationTime);
+            formData.append("items", JSON.stringify(cart));
+            formData.append("paymentProof", paymentProof);
+
+            const response = await fetch(`${API_BASE_URL}/api/orders`, {
+              method: "POST",
+              body: formData,
+            });
+
+            if (!response.ok) {
+              throw new Error("Failed to submit order");
+            }
+
+            const order = await response.json();
 
             // Show success message
-            function showSuccessMessage(text = 'Successfully added to cart!') {
-                successMessage.textContent = text;
-                successMessage.classList.add('show');
-                setTimeout(() => {
-                    successMessage.classList.remove('show');
-                }, 2000);
-            }
-
-            // Update cart count
-            function updateCartCount() {
-                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-                cartCount.textContent = totalItems;
-            }
-
-            // Update cart modal
-            function updateCartModal() {
-                cartItems.innerHTML = '';
-                let total = 0;
-
-                if (cart.length === 0) {
-                    cartItems.innerHTML = '<p>Your cart is empty</p>';
-                    cartTotal.textContent = 'Total: RM0.00';
-                    return;
-                }
-
-                cart.forEach(item => {
-                    const itemElement = document.createElement('div');
-                    itemElement.className = 'cart-item';
-
-                    const itemName = document.createElement('div');
-                    itemName.className = 'cart-item-name';
-                    itemName.textContent = item.name;
-
-                    const itemQuantity = document.createElement('div');
-                    itemQuantity.className = 'cart-item-quantity';
-                    itemQuantity.textContent = `x${item.quantity}`;
-
-                    const itemPrice = document.createElement('div');
-                    itemPrice.className = 'cart-item-price';
-                    itemPrice.textContent = `RM${(item.price * item.quantity).toFixed(2)}`;
-
-                    itemElement.appendChild(itemName);
-                    itemElement.appendChild(itemQuantity);
-                    itemElement.appendChild(itemPrice);
-
-                    cartItems.appendChild(itemElement);
-
-                    total += item.price * item.quantity;
-                });
-
-                cartTotal.textContent = `Total: RM${total.toFixed(2)}`;
-            }
-
-            // Event delegation for quantity controls
-            document.addEventListener('click', function (e) {
-                // Handle increase buttons
-                if (e.target.classList.contains('increase')) {
-                    const quantityElement = e.target.parentElement.querySelector('.quantity');
-                    let quantity = parseInt(quantityElement.textContent);
-                    quantityElement.textContent = quantity + 1;
-
-                    // Update selection state
-                    const menuItem = e.target.closest('.menu-item');
-                    if (menuItem && !menuItem.querySelector('.drink-options')) {
-                        menuItem.classList.add('selected');
-                    }
-
-                    // Enable add to cart button for drinks
-                    if (menuItem) {
-                        const addToCartBtn = menuItem.querySelector('.add-to-cart');
-                        if (addToCartBtn) {
-                            addToCartBtn.removeAttribute('disabled');
-                        }
-                    }
-                }
-                // Handle decrease buttons
-                else if (e.target.classList.contains('decrease')) {
-                    const quantityElement = e.target.parentElement.querySelector('.quantity');
-                    let quantity = parseInt(quantityElement.textContent);
-                    if (quantity > 0) {
-                        quantityElement.textContent = quantity - 1;
-
-                        // Update selection state if quantity reaches 0
-                        if (quantity - 1 === 0) {
-                            const menuItem = e.target.closest('.menu-item');
-                            if (menuItem && !menuItem.querySelector('.drink-options')) {
-                                menuItem.classList.remove('selected');
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Add to cart functionality
-            document.addEventListener('click', function (e) {
-                if (e.target.classList.contains('add-to-cart')) {
-                    const item = e.target.closest('.menu-item');
-                    const itemName = item.querySelector('.item-name').textContent;
-                    let itemsAdded = 0;
-
-                    // Check if this is a drink item
-                    const isDrink = item.querySelector('.drink-options') !== null;
-
-                    if (isDrink) {
-                        // Handle drink items
-                        const drinkOptions = item.querySelectorAll('.drink-option');
-                        drinkOptions.forEach(option => {
-                            const quantity = parseInt(option.querySelector('.quantity').textContent);
-                            if (quantity > 0) {
-                                const type = option.querySelector('.drink-type').textContent;
-                                const priceText = option.querySelector('.drink-price').textContent;
-                                const price = parseFloat(priceText.replace('RM', ''));
-
-                                // Add to cart
-                                cart.push({
-                                    name: `${itemName} (${type})`,
-                                    price: price,
-                                    quantity: quantity
-                                });
-
-                                // Reset quantity
-                                option.querySelector('.quantity').textContent = '0';
-                                itemsAdded++;
-                            }
-                        });
-
-                        if (itemsAdded === 0) {
-                            alert('Please select at least 1 quantity for the drink');
-                            return;
-                        }
-                    } else {
-                        // Handle regular food items
-                        const quantity = parseInt(item.querySelector('.quantity').textContent);
-                        if (quantity > 0) {
-                            const priceText = item.querySelector('.item-price').textContent;
-                            const priceMatch = priceText.match(/RM(\d+\.\d{2})/);
-
-                            if (!priceMatch) {
-                                alert('Could not determine price for this item');
-                                return;
-                            }
-
-                            const price = parseFloat(priceMatch[1]);
-
-                            // Check if item already exists in cart
-                            const existingItem = cart.find(i => i.name === itemName && i.price === price);
-
-                            if (existingItem) {
-                                existingItem.quantity += quantity;
-                            } else {
-                                cart.push({
-                                    name: itemName,
-                                    price: price,
-                                    quantity: quantity
-                                });
-                            }
-
-                            // Reset quantity and selection
-                            item.querySelector('.quantity').textContent = '0';
-                            item.classList.remove('selected');
-                            itemsAdded++;
-                        } else {
-                            alert('Please select at least 1 quantity');
-                            return;
-                        }
-                    }
-
-                    if (itemsAdded > 0) {
-                        updateCartCount();
-                        showSuccessMessage();
-                    }
-                }
-            });
-
-            // Load and render dynamic menu items from API
-            async function loadDynamicMenuItems() {
-                try {
-                    const response = await fetch(`${API_BASE_URL}/api/menu`);
-                    const menuItems = await response.json();
-
-                    const itemsByType = {};
-                    menuItems.forEach(item => {
-                        if (!itemsByType[item.type]) itemsByType[item.type] = [];
-                        itemsByType[item.type].push(item);
-                    });
-
-                    for (const [type, items] of Object.entries(itemsByType)) {
-                        const section = Array.from(document.querySelectorAll('.menu-section'))
-                            .find(section => section.querySelector('h3').textContent.includes(type));
-
-                        if (section) {
-                            const menuItemsContainer = section.querySelector('.menu-items');
-                            items.forEach(item => {
-                                // Check if this item already exists (by name)
-                                const existingItem = Array.from(menuItemsContainer.querySelectorAll('.item-name'))
-                                    .find(el => el.textContent === item.name);
-
-                                if (!existingItem) {
-                                    const isDrink = type.toLowerCase().includes('drink');
-                                    const imgStyle = isDrink ? 'width: 110px; height: 170px;' : 'width: 180px; height: auto;';
-
-                                    const itemElement = document.createElement('div');
-                                    itemElement.className = 'menu-item';
-                                    itemElement.innerHTML = `
-                                    ${item.imageUrl ? `
-                                    <img src="${item.imageUrl}" alt="${item.name}" class="item-img" style="${imgStyle}">
-                                    ` : ''}
-                                    <div class="item-info">
-                                        <div class="item-name">${item.name}</div>
-                                        <div class="item-price">RM${item.price.toFixed(2)}</div>
-                                        ${isDrink ? `
-                                        <div class="drink-options">
-                                            <div class="drink-option">
-                                                <span class="drink-type">Hot</span>
-                                                <span class="drink-price">RM${(item.price * 0.9).toFixed(2)}</span>
-                                                <div class="quantity-controls">
-                                                    <button class="decrease">-</button>
-                                                    <span class="quantity">0</span>
-                                                    <button class="increase">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="drink-option">
-                                                <span class="drink-type">Cold</span>
-                                                <span class="drink-price">RM${(item.price * 1.1).toFixed(2)}</span>
-                                                <div class="quantity-controls">
-                                                    <button class="decrease">-</button>
-                                                    <span class="quantity">0</span>
-                                                    <button class="increase">+</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button class="add-to-cart" disabled>Add to Cart</button>
-                                        ` : `
-                                        <div class="cart-controls">
-                                            <div class="quantity-controls">
-                                                <button class="decrease">-</button>
-                                                <span class="quantity">0</span>
-                                                <button class="increase">+</button>
-                                            </div>
-                                            <button class="add-to-cart">Add to Cart</button>
-                                        </div>
-                                        `}
-                                    </div>
-                                `;
-                                    menuItemsContainer.appendChild(itemElement);
-                                }
-                            });
-                        }
-                    }
-                } catch (err) {
-                    console.error('Failed to load dynamic menu items:', err);
-                }
-            }
-
-            // Cart modal functionality
-            cartIcon.addEventListener('click', function () {
-                updateCartModal();
-                cartModal.style.display = 'flex';
-            });
-
-            closeCart.addEventListener('click', function () {
-                cartModal.style.display = 'none';
-            });
-
-            cartModal.addEventListener('click', function (e) {
-                if (e.target === cartModal) {
-                    cartModal.style.display = 'none';
-                }
-            });
-
-            // Checkout functionality
-            checkoutBtn.addEventListener('click', function () {
-                if (cart.length === 0) {
-                    alert('Your cart is empty');
-                    return;
-                }
-                cartModal.style.display = 'none';
-                checkoutModal.style.display = 'flex';
-            });
-
-            backToCart.addEventListener('click', function () {
-                checkoutModal.style.display = 'none';
-                cartModal.style.display = 'flex';
-            });
-
-            checkoutModal.addEventListener('click', function (e) {
-                if (e.target === checkoutModal) {
-                    checkoutModal.style.display = 'none';
-                }
-            });
-
-            checkoutForm.addEventListener('submit', async function (e) {
-                e.preventDefault();
-
-                const customerName = document.getElementById('customerName').value.trim();
-                const phoneNumber = document.getElementById('phoneNumber').value.trim();
-                const numberOfPeople = parseInt(document.getElementById('numberOfPeople').value);
-                const paymentProof = document.getElementById('paymentProof').files[0];
-                const reservationTime = document.getElementById('reservationTime').value;
-
-                if (!reservationTime) {
-                    alert('Please select a reservation time');
-                    return;
-                }
-
-                if (!customerName || !phoneNumber || isNaN(numberOfPeople) || numberOfPeople < 1 || !paymentProof) {
-                    alert('Please fill in all fields correctly and upload payment proof');
-                    return;
-                }
-
-                try {
-                    const formData = new FormData();
-                    formData.append('customerName', customerName);
-                    formData.append('phoneNumber', phoneNumber);
-                    formData.append('numberOfPeople', numberOfPeople);
-                    formData.append('reservationTime', reservationTime);
-                    formData.append('items', JSON.stringify(cart));
-                    formData.append('paymentProof', paymentProof);
-
-                    const response = await fetch(`${API_BASE_URL}/api/orders`, {
-                        method: 'POST',
-                        body: formData
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Failed to submit order');
-                    }
-
-                    const order = await response.json();
-
-                    // Show success message
-                    const orderSuccess = document.createElement('div');
-                    orderSuccess.className = 'order-success-message';
-                    orderSuccess.innerHTML = `
+            const orderSuccess = document.createElement("div");
+            orderSuccess.className = "order-success-message";
+            orderSuccess.innerHTML = `
                     <div class="success-content">
                         <i class="fas fa-check-circle"></i>
                         <h3>Order Submitted Successfully!</h3>
@@ -1966,11 +1144,11 @@
                         <button onclick="this.parentElement.parentElement.remove()">OK</button>
                     </div>
                 `;
-                    document.body.appendChild(orderSuccess);
+            document.body.appendChild(orderSuccess);
 
-                    // Add CSS for the success message
-                    const styleElement = document.createElement('style');
-                    styleElement.innerHTML = `
+            // Add CSS for the success message
+            const styleElement = document.createElement("style");
+            styleElement.innerHTML = `
                     .order-success-message {
                         position: fixed;
                         top: 0;
@@ -2009,40 +1187,106 @@
                         cursor: pointer;
                     }
                 `;
-                    document.head.appendChild(styleElement);
+            document.head.appendChild(styleElement);
 
-                    // Clear the cart
-                    cart.length = 0;
-                    updateCartCount();
-                    updateCartModal();
-                    checkoutModal.style.display = 'none';
-                    checkoutForm.reset();
-                } catch (err) {
-                    console.error('Error submitting order:', err);
-                    alert('Error submitting order. Please try again.');
-                }
-            });
-
-            // Mobile menu toggle
-            const menuToggle = document.getElementById('menu-toggle');
-            const navLinks = document.querySelector('.nav-links');
-
-            menuToggle.addEventListener('click', function () {
-                navLinks.classList.toggle('active');
-            });
-
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.addEventListener('click', function () {
-                    if (window.innerWidth <= 768) {
-                        navLinks.classList.remove('active');
-                    }
-                });
-            });
-
-            // Load dynamic menu items
-            loadDynamicMenuItems();
+            // Clear the cart
+            cart.length = 0;
+            updateCartCount();
+            updateCartModal();
+            checkoutModal.style.display = "none";
+            checkoutForm.reset();
+          } catch (err) {
+            console.error("Error submitting order:", err);
+            alert("Error submitting order. Please try again.");
+          }
         });
-    </script>
-</body>
 
+        // Mobile menu toggle
+        const menuToggle = document.getElementById("menu-toggle");
+        const navLinks = document.querySelector(".nav-links");
+
+        menuToggle.addEventListener("click", function () {
+          navLinks.classList.toggle("active");
+        });
+
+        document.querySelectorAll(".nav-links a").forEach((link) => {
+          link.addEventListener("click", function () {
+            if (window.innerWidth <= 768) {
+              navLinks.classList.remove("active");
+            }
+          });
+        });
+      });
+    </script>
+    <script type="module" src="script.js"></script>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", async function () {
+    const API_BASE_URL = "https://yftest.onrender.com";
+
+    async function fetchAndRenderMenu() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/menu`);
+        const menuItems = await response.json();
+        console.log("✅ Menu items fetched:", menuItems);
+
+        menuItems.forEach(item => {
+          console.log(`🔍 Rendering: ${item.name}, type=${item.type}`);
+          const container = getSectionContainer(item.type);
+          if (!container) {
+            console.warn(`⚠️ No container found for type: ${item.type}`);
+            return;
+          }
+
+          const html = `
+            <div class="menu-item">
+              <img class="item-img" src="${item.imageUrl || 'fallback.jpg'}" alt="${item.name}" />
+              <div class="item-info">
+                <div class="item-name">${item.name}</div>
+                <div class="item-price">RM${parseFloat(item.price).toFixed(2)}</div>
+                <div class="quantity-controls">
+                  <button class="decrease">-</button>
+                  <span class="quantity">0</span>
+                  <button class="increase">+</button>
+                </div>
+                <button class="add-to-cart">Add to Cart</button>
+              </div>
+            </div>
+          `;
+          container.insertAdjacentHTML("beforeend", html);
+        });
+      } catch (error) {
+        console.error("❌ Error fetching menu items:", error);
+      }
+    }
+
+    function getSectionContainer(type) {
+  const normalized = type.trim().toLowerCase();
+
+  // Convert common singulars to expected plural IDs
+  switch (normalized) {
+    case "noodle": return document.getElementById("noodlesContainer");
+    case "rice": return document.getElementById("riceContainer");
+    case "drink": return document.getElementById("drinksContainer");
+    case "snack": return document.getElementById("snacksContainer");
+    case "bread": return document.getElementById("breadContainer");
+    case "addon": return document.getElementById("addOnsContainer");
+
+    // fallback: plural versions
+    case "noodles": return document.getElementById("noodlesContainer");
+    case "drinks": return document.getElementById("drinksContainer");
+    case "snacks": return document.getElementById("snacksContainer");
+    case "addons": return document.getElementById("addOnsContainer");
+    default:
+      return null;
+  }
+}
+
+
+    await fetchAndRenderMenu();
+  });
+</script>
+
+
+  </body>
 </html>
