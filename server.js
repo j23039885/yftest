@@ -304,8 +304,8 @@ app.get("/api/menu", (req, res) => {
     const menuItems = rows.map((row) => ({
       ...row,
       imageUrl: row.imagePath
-        ? `${req.protocol}://${req.get("host")}/uploads/${row.imagePath}`
-        : null,
+  ? `https://yftest.onrender.com/uploads/${row.imagePath}`
+  : null,
     }));
 
     res.json(menuItems);
